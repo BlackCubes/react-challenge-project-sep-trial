@@ -1,8 +1,23 @@
 import { ADD_ORDER } from "./types";
 import { SERVER_IP } from "../../private";
 
-const finishAddOrder = () => ({
+const finishAddOrder = (
+  _id,
+  order_item,
+  quantity,
+  ordered_by,
+  createdAt,
+  updatedAt
+) => ({
   type: ADD_ORDER,
+  payload: {
+    _id,
+    order_item,
+    quantity,
+    ordered_by,
+    createdAt,
+    updatedAt,
+  },
 });
 
 export const addOrder = (order_item, quantity, ordered_by) => (dispatch) =>
@@ -20,6 +35,17 @@ export const addOrder = (order_item, quantity, ordered_by) => (dispatch) =>
     .then((res) => res.json())
     .then((res) => {
       if (res.success) {
-        dispatch(finishAddOrder());
+        const isoDate = new Date().toISOString();
+
+        dispatch(
+          finishAddOrder(
+            res.insertedId,
+            order_item,
+            quantity,
+            ordered_by,
+            isoDate,
+            isoDate
+          )
+        );
       }
     });

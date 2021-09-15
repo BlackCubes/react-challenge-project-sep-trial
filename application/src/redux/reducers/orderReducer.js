@@ -1,20 +1,25 @@
 import { ADD_ORDER } from "../actions/types";
 
-const INITIAL_STATE = [
-  {
-    _id: "",
-    order_item: "",
-    quantity: 0,
-    ordered_by: "Unknown!",
-    createdAt: "",
-    updatedAt: "",
-  },
-];
+const INITIAL_STATE = {
+  orders: [],
+};
 
 const orderReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case ADD_ORDER:
-      return;
+      const newOrder = {
+        _id: action.payload["_id"],
+        order_item: action.payload.order_item,
+        quantity: action.payload.quantity,
+        ordered_by: action.payload.ordered_by,
+        createdAt: action.payload.createdAt,
+        updatedAt: action.payload.updatedAt,
+      };
+
+      return {
+        ...state,
+        orders: [...state.orders, newOrder],
+      };
     default:
       return state;
   }
