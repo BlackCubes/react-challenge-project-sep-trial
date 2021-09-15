@@ -1,9 +1,8 @@
 import { ADD_ORDER } from "./types";
 import { SERVER_IP } from "../../private";
 
-const finishAddOrder = (_id) => ({
+const finishAddOrder = () => ({
   type: ADD_ORDER,
-  payload: { _id },
 });
 
 export const addOrder = (order_item, quantity, ordered_by) => (dispatch) =>
@@ -21,6 +20,6 @@ export const addOrder = (order_item, quantity, ordered_by) => (dispatch) =>
     .then((res) => res.json())
     .then((res) => {
       if (res.success) {
-        dispatch(finishAddOrder(res.insertedId));
+        dispatch(finishAddOrder());
       }
     });
