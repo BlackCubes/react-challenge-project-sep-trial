@@ -1,13 +1,13 @@
 import { ADD_ORDER } from "./types";
 import { SERVER_IP } from "../../private";
 
-const finishOrder = (_id) => ({
+const finishAddOrder = (_id) => ({
   type: ADD_ORDER,
   payload: { _id },
 });
 
-export const addOrder = (order_item, quantity, ordered_by) => (dispatch) => {
-  return fetch(`${SERVER_IP}/api/add-order`, {
+export const addOrder = (order_item, quantity, ordered_by) => (dispatch) =>
+  fetch(`${SERVER_IP}/api/add-order`, {
     method: "POST",
     body: JSON.stringify({
       order_item,
@@ -21,8 +21,6 @@ export const addOrder = (order_item, quantity, ordered_by) => (dispatch) => {
     .then((res) => res.json())
     .then((res) => {
       if (res.success) {
-        dispatch(finishOrder(res.insertedId));
+        dispatch(finishAddOrder(res.insertedId));
       }
-    })
-    .catch((err) => console.log(err));
-};
+    });
