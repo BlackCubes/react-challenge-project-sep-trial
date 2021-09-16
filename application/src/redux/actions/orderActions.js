@@ -117,7 +117,7 @@ const finishDeleteOrder = (_id) => ({
 
 export const deleteOrder = (id) => (dispatch) =>
   fetch(`${SERVER_IP}/api/delete-order`, {
-    method: "DELETE",
+    method: "POST",
     body: JSON.stringify({ id }),
     headers: {
       "Content-Type": "application/json",
