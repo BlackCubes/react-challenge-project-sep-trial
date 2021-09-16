@@ -1,4 +1,9 @@
-import { ADD_ORDER, GET_CURRENT_ORDERS } from "./types";
+import {
+  ADD_ORDER,
+  DELETE_ORDER,
+  EDIT_ORDER,
+  GET_CURRENT_ORDERS,
+} from "./types";
 import { SERVER_IP } from "../../private";
 
 // GET CURRENT ORDERS
@@ -65,5 +70,62 @@ export const addOrder = (order_item, quantity, ordered_by) => (dispatch) =>
             isoDate
           )
         );
+      }
+    });
+
+// EDIT ORDER
+const finishEditOrder = (_id, order_item, quantity, ordered_by, updatedAt) => ({
+  type: EDIT_ORDER,
+  payload: {
+    _id,
+    order_item,
+    quantity,
+    ordered_by,
+    updatedAt,
+  },
+});
+
+export const editOrder = (id, order_item, quantity, ordered_by) => (dispatch) =>
+  fetch(`${SERVER_IP}/api/edit-order`, {
+    method: "POST",
+    body: JSON.stringify({
+      id,
+      order_item,
+      quantity,
+      ordered_by,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.success) {
+        const updatedAt = new Date().toISOString();
+
+        dispatch(
+          finishEditOrder(id, order_item, quantity, ordered_by, updatedAt)
+        );
+      }
+    });
+
+// DELETE ORDER
+const finishDeleteOrder = (_id) => ({
+  type: DELETE_ORDER,
+  payload: { _id },
+});
+
+export const deleteOrder = (id) => (dispatch) =>
+  fetch(`${SERVER_IP}/api/delete-order`, {
+    method: "POST",
+    body: JSON.stringify({ id }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.success) {
+        dispatch(finishDeleteOrder(id));
       }
     });
