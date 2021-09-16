@@ -3,7 +3,7 @@ import { localTimeStringMilitary } from "../../utils";
 
 const OrdersList = (props) => {
   const { orders } = props;
-  if (!props || !props.orders || !props.orders.length)
+  if (!props || !orders || !orders.length)
     return (
       <div className="empty-orders">
         <h2>There are no orders to display</h2>
