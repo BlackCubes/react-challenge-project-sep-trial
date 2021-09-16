@@ -1,9 +1,13 @@
 import React from "react";
+import { connect } from "react-redux";
 import { localTimeStringMilitary } from "../../utils";
 
-const OrdersList = (props) => {
-  const { orders } = props;
-  if (!props || !orders || !orders.length)
+const mapStateToProps = (state) => ({
+  orders: state.order.orders,
+});
+
+const OrdersList = ({ orders }) => {
+  if (!orders || !orders.length)
     return (
       <div className="empty-orders">
         <h2>There are no orders to display</h2>
@@ -28,4 +32,4 @@ const OrdersList = (props) => {
   ));
 };
 
-export default OrdersList;
+export default connect(mapStateToProps, null)(OrdersList);

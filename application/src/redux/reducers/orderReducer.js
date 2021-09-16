@@ -1,4 +1,4 @@
-import { ADD_ORDER } from "../actions/types";
+import { ADD_ORDER, GET_CURRENT_ORDERS } from "../actions/types";
 
 const INITIAL_STATE = {
   orders: [],
@@ -6,6 +6,11 @@ const INITIAL_STATE = {
 
 const orderReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case GET_CURRENT_ORDERS:
+      return {
+        ...state,
+        orders: action.payload.orders,
+      };
     case ADD_ORDER:
       const newOrder = {
         _id: action.payload["_id"],
