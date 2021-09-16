@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { editOrder } from "../../redux/actions/orderActions";
+import { deleteOrder, editOrder } from "../../redux/actions/orderActions";
 import { localTimeStringMilitary } from "../../utils";
 
 const mapStateToProps = (state) => ({
@@ -8,11 +8,12 @@ const mapStateToProps = (state) => ({
 });
 
 const mapStateToDispatch = (dispatch) => ({
+  commenceDeleteOrder: (id) => dispatch(deleteOrder(id)),
   commenceEditOrder: (id, order_item, quantity, ordered_by) =>
     dispatch(editOrder(id, order_item, quantity, ordered_by)),
 });
 
-const OrdersList = ({ commenceEditOrder, orders }) => {
+const OrdersList = ({ commenceDeleteOrder, commenceEditOrder, orders }) => {
   if (!orders || !orders.length)
     return (
       <div className="empty-orders">
@@ -44,7 +45,12 @@ const OrdersList = ({ commenceEditOrder, orders }) => {
         >
           Edit
         </button>
-        <button className="btn btn-danger">Delete</button>
+        <button
+          className="btn btn-danger"
+          onClick={() => commenceDeleteOrder(order._id)}
+        >
+          Delete
+        </button>
       </div>
     </div>
   ));
