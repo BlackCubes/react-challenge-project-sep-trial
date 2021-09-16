@@ -1,12 +1,18 @@
 import React from "react";
 import { connect } from "react-redux";
+import { editOrder } from "../../redux/actions/orderActions";
 import { localTimeStringMilitary } from "../../utils";
 
 const mapStateToProps = (state) => ({
   orders: state.order.orders,
 });
 
-const OrdersList = ({ orders }) => {
+const mapStateToDispatch = (dispatch) => ({
+  commenceEditOrder: (id, order_item, quantity, ordered_by) =>
+    dispatch(editOrder(id, order_item, quantity, ordered_by)),
+});
+
+const OrdersList = ({ commenceEditOrder, orders }) => {
   if (!orders || !orders.length)
     return (
       <div className="empty-orders">
@@ -25,11 +31,23 @@ const OrdersList = ({ orders }) => {
         <p>Quantity: {order.quantity}</p>
       </div>
       <div className="col-md-4 view-order-right-col">
-        <button className="btn btn-success">Edit</button>
+        <button
+          className="btn btn-success"
+          onClick={() =>
+            commenceEditOrder(
+              order._id,
+              order.order_item,
+              order.quantity,
+              "Elias Gutierrez"
+            )
+          }
+        >
+          Edit
+        </button>
         <button className="btn btn-danger">Delete</button>
       </div>
     </div>
   ));
 };
 
-export default connect(mapStateToProps, null)(OrdersList);
+export default connect(mapStateToProps, mapStateToDispatch)(OrdersList);
