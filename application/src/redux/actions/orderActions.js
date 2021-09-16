@@ -1,4 +1,9 @@
-import { ADD_ORDER, EDIT_ORDER, GET_CURRENT_ORDERS } from "./types";
+import {
+  ADD_ORDER,
+  DELETE_ORDER,
+  EDIT_ORDER,
+  GET_CURRENT_ORDERS,
+} from "./types";
 import { SERVER_IP } from "../../private";
 
 // GET CURRENT ORDERS
@@ -101,5 +106,26 @@ export const editOrder = (id, order_item, quantity, ordered_by) => (dispatch) =>
         dispatch(
           finishEditOrder(id, order_item, quantity, ordered_by, updatedAt)
         );
+      }
+    });
+
+// DELETE ORDER
+const finishDeleteOrder = (_id) => ({
+  type: DELETE_ORDER,
+  payload: { _id },
+});
+
+export const deleteOrder = (id) => (dispatch) =>
+  fetch(`${SERVER_IP}/api/delete-order`, {
+    method: "DELETE",
+    body: JSON.stringify({ id }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.success) {
+        dispatch(finishDeleteOrder(id));
       }
     });

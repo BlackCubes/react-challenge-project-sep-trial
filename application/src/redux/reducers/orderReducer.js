@@ -1,4 +1,9 @@
-import { ADD_ORDER, EDIT_ORDER, GET_CURRENT_ORDERS } from "../actions/types";
+import {
+  ADD_ORDER,
+  DELETE_ORDER,
+  EDIT_ORDER,
+  GET_CURRENT_ORDERS,
+} from "../actions/types";
 
 const INITIAL_STATE = {
   orders: [],
@@ -42,6 +47,13 @@ const orderReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         orders: updatedOrders,
+      };
+    case DELETE_ORDER:
+      return {
+        ...state,
+        orders: state.orders.filter(
+          (order) => order._id !== action.payload._id
+        ),
       };
     default:
       return state;
