@@ -1,6 +1,24 @@
-import { ADD_ORDER } from "./types";
+import { ADD_ORDER, GET_CURRENT_ORDERS } from "./types";
 import { SERVER_IP } from "../../private";
 
+// GET CURRENT ORDERS
+const finishGetCurrentOrders = (orders) => ({
+  type: GET_CURRENT_ORDERS,
+  payload: { orders },
+});
+
+export const getCurrentOrders = () => (dispatch) =>
+  fetch(`${SERVER_IP}/api/current-orders`, {
+    method: "GET",
+  })
+    .then((res) => res.json())
+    .then((res) => {
+      if (res.success) {
+        dispatch(finishGetCurrentOrders(res.orders));
+      }
+    });
+
+// ADD ORDER
 const finishAddOrder = (
   _id,
   order_item,
