@@ -68,7 +68,11 @@ export const loginUser = (email, password) => {
       .then((response) => {
         if (response.success) {
           dispatch(finishLogin(response.email, response.token));
+        } else {
+          dispatch(finishAuthError(response.error));
         }
+
+        dispatch(finishAuthSuccess(response.success));
       });
   };
 };
