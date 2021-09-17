@@ -1,9 +1,14 @@
-import { LOGIN, LOGOUT, SIGNUP } from "../actions/types";
+import { AUTH_SUCCESS, LOGIN, LOGOUT, SIGNUP } from "../actions/types";
 
 const INITIAL_STATE = { email: null, token: null, success: false, error: "" };
 
 const authReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case AUTH_SUCCESS:
+      return {
+        ...state,
+        success: action.payload.success,
+      };
     case SIGNUP:
       return {
         ...state,

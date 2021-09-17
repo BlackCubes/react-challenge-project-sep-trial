@@ -1,5 +1,11 @@
-import { LOGIN, LOGOUT, SIGNUP } from "./types";
+import { AUTH_SUCCESS, LOGIN, LOGOUT, SIGNUP } from "./types";
 import { SERVER_IP } from "../../private";
+
+// RESET AUTH SUCCESS STATE
+export const authSuccessReset = () => ({
+  type: AUTH_SUCCESS,
+  payload: { success: false },
+});
 
 // SIGNUP
 const finishSignup = (success, error) => ({

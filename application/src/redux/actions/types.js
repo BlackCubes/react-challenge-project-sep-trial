@@ -1,4 +1,5 @@
 // AUTH
+export const AUTH_SUCCESS = "auth/success";
 export const SIGNUP = "signup";
 export const LOGIN = "login";
 export const LOGOUT = "logout";
