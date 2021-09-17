@@ -15,18 +15,21 @@ export const signupUser =
         email,
         password,
         password_confirmation,
-      })
-        .then((res) => res.json())
-        .then((res) => {
-          let error = "";
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        let error = "";
 
-          if (!res.success) {
-            error = res.error;
-          }
+        if (!res.success) {
+          error = res.error;
+        }
 
-          dispatch(finishSignup(error));
-        }),
-    });
+        dispatch(finishSignup(error));
+      });
 
 // LOGIN
 const finishLogin = (email, token) => {
