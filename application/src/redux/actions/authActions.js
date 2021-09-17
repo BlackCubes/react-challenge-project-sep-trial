@@ -1,16 +1,21 @@
-import { AUTH_SUCCESS, LOGIN, LOGOUT, SIGNUP } from "./types";
+import { AUTH_ERROR, AUTH_SUCCESS, LOGIN, LOGOUT, SIGNUP } from "./types";
 import { SERVER_IP } from "../../private";
 
-// RESET AUTH SUCCESS STATE
-export const authSuccessReset = () => ({
+// AUTH SUCCESS
+export const finishAuthSuccess = (success) => ({
   type: AUTH_SUCCESS,
-  payload: { success: false },
+  payload: { success },
+});
+
+export const finishAuthError = (error) => ({
+  type: AUTH_ERROR,
+  payload: { error },
 });
 
 // SIGNUP
-const finishSignup = (success, error) => ({
+const finishSignup = () => ({
   type: SIGNUP,
-  payload: { success, error },
+  payload: null,
 });
 
 export const signupUser =
@@ -28,13 +33,12 @@ export const signupUser =
     })
       .then((res) => res.json())
       .then((res) => {
-        let error = "";
-
         if (!res.success) {
-          error = res.error;
+          dispatch(finishAuthError(res.error));
         }
 
-        dispatch(finishSignup(res.success, error));
+        dispatch(finishSignup());
+        dispatch(finishAuthSuccess(res.success));
       });
 
 // LOGIN
