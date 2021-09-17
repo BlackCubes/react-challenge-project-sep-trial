@@ -2,9 +2,9 @@ import { LOGIN, LOGOUT, SIGNUP } from "./types";
 import { SERVER_IP } from "../../private";
 
 // SIGNUP
-const finishSignup = (error) => ({
+const finishSignup = (success, error) => ({
   type: SIGNUP,
-  payload: { error },
+  payload: { success, error },
 });
 
 export const signupUser =
@@ -28,7 +28,7 @@ export const signupUser =
           error = res.error;
         }
 
-        dispatch(finishSignup(error));
+        dispatch(finishSignup(res.success, error));
       });
 
 // LOGIN
