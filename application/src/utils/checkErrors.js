@@ -3,11 +3,9 @@ const checkErrors = (errorObject) => {
 
   if (!errorObject || !errorArray.length) return;
 
-  errorArray.forEach((error) => {
-    if (error.length) {
-      return false;
-    }
-  });
+  for (let i = 0; i < errorArray.length; i++) {
+    if (errorArray[i].length) return false;
+  }
 
   return true;
 };
