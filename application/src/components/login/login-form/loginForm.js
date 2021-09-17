@@ -1,46 +1,65 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux'; 
-import { loginUser } from '../../../redux/actions/authActions'
+import React, { useState } from "react";
+import { connect } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { loginUser } from "../../../redux/actions/authActions";
 
-const mapActionsToProps = dispatch => ({
+const mapActionsToProps = (dispatch) => ({
   commenceLogin(email, password) {
-    dispatch(loginUser(email, password))
-  }
-})
+    dispatch(loginUser(email, password));
+  },
+});
 
-class LoginForm extends Component {
-  state = {
+const LoginForm = ({ commenceLogin }) => {
+  const [inputValues, setInputValues] = useState({
     email: "",
     password: "",
-  }
+  });
+  const history = useHistory();
 
-  login(e) {
+  const login = (e) => {
     e.preventDefault();
-    this.props.commenceLogin(this.state.email, this.state.password);
-    this.props.onLogin();
-  }
+    commenceLogin(this.state.email, this.state.password);
+    history.push("/view-orders");
+  };
 
-  onChange(key, val) {
-    this.setState({ [key]: val });
-  }
+  const onChange = (key, val) => {
+    setInputValues({ [key]: val });
+  };
 
-  render() {
-    return (
-      <form>
-        <div className="form-group">
-          <label htmlFor="inputEmail">Email</label>
-          <input type="text" className="form-control" id="inputEmail" placeholder="test@test.com" value={this.state.email} onChange={e => this.onChange('email', e.target.value)}></input>
-        </div>
-        <div className="form-group">
-          <label htmlFor="inputPassword">Password</label>
-          <input type="password" className="form-control" id="inputPassword" value={this.state.password} onChange={e => this.onChange('password', e.target.value)}></input>
-        </div>
-        <div className="d-flex justify-content-center">
-            <button onClick={e => this.login(e)} type="submit" className="btn btn-primary">Login</button>
-        </div>
-      </form>
-    );
-  }
-}
+  return (
+    <form>
+      <div className="form-group">
+        <label htmlFor="inputEmail">Email</label>
+        <input
+          type="text"
+          className="form-control"
+          id="inputEmail"
+          placeholder="test@test.com"
+          value={inputValues.email}
+          onChange={(e) => onChange("email", e.target.value)}
+        ></input>
+      </div>
+      <div className="form-group">
+        <label htmlFor="inputPassword">Password</label>
+        <input
+          type="password"
+          className="form-control"
+          id="inputPassword"
+          value={inputValues.password}
+          onChange={(e) => onChange("password", e.target.value)}
+        ></input>
+      </div>
+      <div className="d-flex justify-content-center">
+        <button
+          onClick={(e) => login(e)}
+          type="submit"
+          className="btn btn-primary"
+        >
+          Login
+        </button>
+      </div>
+    </form>
+  );
+};
 
 export default connect(null, mapActionsToProps)(LoginForm);
