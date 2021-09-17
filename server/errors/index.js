@@ -1,3 +1,4 @@
 const AppError = require("./appError");
+const globalErrorHandler = require("./globalErrorHandler");
 
-module.exports = { AppError };
+module.exports = { AppError, globalErrorHandler };
