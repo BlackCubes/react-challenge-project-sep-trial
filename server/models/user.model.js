@@ -21,12 +21,28 @@ const UserSchema = new mongoose.Schema(
       ],
       select: false,
     },
+    password_confirmation: {
+      type: String,
+      required: [true, "Please confirm your password!"],
+    },
   },
   {
     timestamps: true,
     collection: "Users",
   }
 );
+
+// DOCUMENT MIDDLEWARES
+// --- salt password
+UserSchema.pre("save", async function (next) {
+  if (!this.isModified("password")) {
+    return next();
+  }
+
+  this.password = await bcrypt.hash(this.password, 12);
+  this.password_confirmation = undefined;
+  next();
+});
 
 // INSTANCE METHODS
 // --- check for the correct password
