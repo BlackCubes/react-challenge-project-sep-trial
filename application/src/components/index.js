@@ -1,4 +1,4 @@
-import Login from "./login/login";
+import Login from "./login";
 import Main from "./main/main";
 import Nav from "./nav/nav";
 import OrderForm from "./order-form/orderForm";
