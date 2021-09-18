@@ -50,12 +50,13 @@ const LoginForm = ({ commenceLogin }) => {
 
         <input
           type="text"
+          name="email"
           className="form-control"
           id="loginEmail"
           placeholder="test@test.com"
           value={inputValues.email}
           onChange={loginOnChange}
-        ></input>
+        />
 
         {inputErrors.email.length > 0 && <span>{inputErrors.email}</span>}
       </div>
@@ -65,11 +66,12 @@ const LoginForm = ({ commenceLogin }) => {
 
         <input
           type="password"
+          name="password"
           className="form-control"
           id="loginPassword"
           value={inputValues.password}
           onChange={loginOnChange}
-        ></input>
+        />
 
         {inputErrors.password.length > 0 && <span>{inputErrors.password}</span>}
       </div>
