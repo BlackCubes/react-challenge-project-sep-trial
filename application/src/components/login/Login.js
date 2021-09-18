@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import LoginForm from "./login-form";
 import { finishAuthSuccess } from "../../redux/actions/authActions";
 import "./login.css";
@@ -28,8 +28,14 @@ const Login = ({ commenceFinishAuthSuccess, errorAuth, successAuth }) => {
     <div className="main-body">
       <h1 className="text-center">Login Screen</h1>
 
-      <div className="d-flex justify-content-center mt-5">
+      <div className="d-flex flex-column justify-content-center mt-5">
         <LoginForm />
+
+        <div className="mt-4">
+          <small>
+            New? <Link to="/signup">Sign up now</Link>.
+          </small>
+        </div>
       </div>
     </div>
   );
