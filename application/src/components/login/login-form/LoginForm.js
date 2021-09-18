@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
 import { loginUser } from "../../../redux/actions/authActions";
+import { checkErrors, checkHasInputs, validatorHandler } from "../../../utils";
 
 const mapActionsToProps = (dispatch) => ({
   commenceLogin(email, password) {
@@ -10,6 +11,10 @@ const mapActionsToProps = (dispatch) => ({
 
 const LoginForm = ({ commenceLogin }) => {
   const [inputValues, setInputValues] = useState({
+    email: "",
+    password: "",
+  });
+  const [inputErrors, setInputErrors] = useState({
     email: "",
     password: "",
   });
@@ -26,9 +31,16 @@ const LoginForm = ({ commenceLogin }) => {
   const loginSubmit = (e) => {
     e.preventDefault();
 
-    const { email, password } = inputValues;
+    setInputErrors(validatorHandler(inputValues));
 
-    commenceLogin(email, password);
+    const hasInputs = checkHasInputs(inputValues);
+    const hasNoErrors = checkErrors(inputErrors);
+
+    if (hasInputs && hasNoErrors) {
+      const { email, password } = inputValues;
+
+      commenceLogin(email, password);
+    }
   };
 
   return (
@@ -44,6 +56,8 @@ const LoginForm = ({ commenceLogin }) => {
           value={inputValues.email}
           onChange={loginOnChange}
         ></input>
+
+        {inputErrors.email.length > 0 && <span>{inputErrors.email}</span>}
       </div>
 
       <div className="form-group">
@@ -56,6 +70,8 @@ const LoginForm = ({ commenceLogin }) => {
           value={inputValues.password}
           onChange={loginOnChange}
         ></input>
+
+        {inputErrors.password.length > 0 && <span>{inputErrors.password}</span>}
       </div>
 
       <div className="d-flex justify-content-center">
