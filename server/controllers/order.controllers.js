@@ -42,18 +42,16 @@ exports.updateOrder = catchAsync(async (req, res, next) => {
     return next(new AppError("No order exists with that id!", 400));
   }
 
-  const updatedOrder = await Order.findByIdAndUpdate(
-    id,
-    {
-      order_item,
-      quantity,
-      ordered_by,
-    },
-    {
-      new: true,
-      runValidators: true,
-    }
-  );
+  const chosenUpdates = {};
+
+  if (order_item) chosenUpdates.order_item = order_item;
+  if (quantity) chosenUpdates.quantity = quantity;
+  if (ordered_by) chosenUpdates.ordered_by = ordered_by;
+
+  const updatedOrder = await Order.findByIdAndUpdate(id, chosenUpdates, {
+    new: true,
+    runValidators: true,
+  });
 
   if (!updatedOrder) {
     return next(new AppError("Error in database while updating.", 400));
