@@ -54,7 +54,7 @@ app.get("/", (req, res) => {
   res.send("Hi!");
 });
 
-router.get("/test", (req, res) => {
+app.get("/test", (req, res) => {
   console.log("Test endpoint hit!");
   res.json({ success: true });
 });
