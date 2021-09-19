@@ -1,4 +1,4 @@
-const Order = require("../models");
+const { Order } = require("../models");
 const { AppError } = require("../errors");
 const { catchAsync, filterObject, sanitize } = require("../utils");
 
