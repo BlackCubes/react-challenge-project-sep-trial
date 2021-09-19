@@ -34,7 +34,7 @@ exports.updateOrder = catchAsync(async (req, res, next) => {
     filterObject(req.body, "id", "order_item", "quantity", "ordered_by")
   );
 
-  const findOrder = await Order.valueExists(id);
+  const findOrder = await Order.valueExists({ id });
 
   if (!findOrder) {
     return next(new AppError("No order exists with that id!", 400));
@@ -63,7 +63,7 @@ exports.updateOrder = catchAsync(async (req, res, next) => {
 exports.deleteOrder = catchAsync(async (req, res, next) => {
   const { id } = sanitize(filterObject(req.body, "id"));
 
-  const findOrder = await Order.valueExists(id);
+  const findOrder = await Order.valueExists({ id });
 
   if (!findOrder) {
     return next(new AppError("No order exists with that id!", 400));
