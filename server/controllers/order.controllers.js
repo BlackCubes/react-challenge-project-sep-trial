@@ -30,28 +30,28 @@ exports.addOrder = catchAsync(async (req, res, next) => {
 
 exports.updateOrder = catchAsync(async (req, res, next) => {
   // make sure an order exists in the DB with that id.
-  const { id, order_item, quantity, ordered_by } = sanitize(
-    filterObject(req.body, "id", "order_item", "quantity", "ordered_by")
+  const { id } = sanitize(filterObject(req.params, "id"));
+
+  const { order_item, quantity, ordered_by } = sanitize(
+    filterObject(req.body, "order_item", "quantity", "ordered_by")
   );
 
-  const findOrder = await Order.valueExists({ id });
+  const findOrder = await Order.valueExists({ _id: id });
 
   if (!findOrder) {
     return next(new AppError("No order exists with that id!", 400));
   }
 
-  const updatedOrder = await Order.findByIdAndUpdate(
-    id,
-    {
-      order_item,
-      quantity,
-      ordered_by,
-    },
-    {
-      new: true,
-      runValidators: true,
-    }
-  );
+  const chosenUpdates = {};
+
+  if (order_item) chosenUpdates.order_item = order_item;
+  if (quantity) chosenUpdates.quantity = quantity;
+  if (ordered_by) chosenUpdates.ordered_by = ordered_by;
+
+  const updatedOrder = await Order.findByIdAndUpdate(id, chosenUpdates, {
+    new: true,
+    runValidators: true,
+  });
 
   if (!updatedOrder) {
     return next(new AppError("Error in database while updating.", 400));
@@ -61,9 +61,9 @@ exports.updateOrder = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteOrder = catchAsync(async (req, res, next) => {
-  const { id } = sanitize(filterObject(req.body, "id"));
+  const { id } = sanitize(filterObject(req.params, "id"));
 
-  const findOrder = await Order.valueExists({ id });
+  const findOrder = await Order.valueExists({ _id: id });
 
   if (!findOrder) {
     return next(new AppError("No order exists with that id!", 400));
