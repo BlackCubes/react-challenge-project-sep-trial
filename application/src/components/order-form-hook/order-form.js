@@ -1,27 +1,28 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { Template } from "../../components";
-import "./orderForm.css";
-import { addOrder } from "../../redux/actions/orderActions";
 import { connect } from "react-redux";
+import { Template } from "../../components";
+import { addOrder } from "../../redux/actions/orderActions";
+import "./orderForm.css";
+
+const mapStateToProps = (state) => ({
+  authEmail: state.auth.email,
+});
 
 const mapDispatchToProps = (dispatch) => ({
   commenceAddOrder: (order_item, quantity, ordered_by) =>
     dispatch(addOrder(order_item, quantity, ordered_by)),
 });
 
-const OrderForm = ({ commenceAddOrder }) => {
+const OrderForm = ({ authEmail, commenceAddOrder }) => {
   const [orderItem, setOrderItem] = useState("");
   const [quantity, setQuantity] = useState("1");
 
   const menuItemChosen = (event) => setOrderItem(event.target.value);
   const menuQuantityChosen = (event) => setQuantity(event.target.value);
 
-  const auth = useSelector((state) => state.auth);
-
   const submitOrder = () => {
     if (orderItem === "") return;
-    const ordered_by = auth.email || "Unknown!";
+    const ordered_by = authEmail || "Unknown!";
 
     commenceAddOrder(orderItem, quantity, ordered_by);
   };
@@ -68,4 +69,4 @@ const OrderForm = ({ commenceAddOrder }) => {
   );
 };
 
-export default connect(null, mapDispatchToProps)(OrderForm);
+export default connect(mapStateToProps, mapDispatchToProps)(OrderForm);
