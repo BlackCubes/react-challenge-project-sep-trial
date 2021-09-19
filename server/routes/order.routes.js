@@ -18,3 +18,5 @@ router.delete(
   orderController.deleteOrder
 );
 router.delete("/delete-all", orderController.deleteAllOrders);
+
+module.exports = router;
