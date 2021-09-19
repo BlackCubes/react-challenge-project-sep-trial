@@ -13,7 +13,7 @@ exports.addOrder = catchAsync(async (req, res, next) => {
 
 exports.updateOrder = catchAsync(async (req, res, next) => {
   const validationRule = {
-    id: "required|hex|size:24",
+    id: "required|hex|size:24|regexMongoID",
     order_item: "string",
     quantity: "numeric",
     ordered_by: "string",
@@ -24,7 +24,7 @@ exports.updateOrder = catchAsync(async (req, res, next) => {
 
 exports.deleteOrder = catchAsync(async (req, res, next) => {
   const validationRule = {
-    id: "required|hex|size:24",
+    id: "required|hex|size:24|regexMongoID",
   };
 
   validationHandler(req, next, validationRule);
