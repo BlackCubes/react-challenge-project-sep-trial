@@ -13,7 +13,7 @@ const finishGetCurrentOrders = (orders) => ({
 });
 
 export const getCurrentOrders = () => (dispatch) =>
-  fetch(`${SERVER_IP}/api/current-orders`, {
+  fetch(`${SERVER_IP}/api/order/current-orders`, {
     method: "GET",
   })
     .then((res) => res.json())
@@ -44,7 +44,7 @@ const finishAddOrder = (
 });
 
 export const addOrder = (order_item, quantity, ordered_by) => (dispatch) =>
-  fetch(`${SERVER_IP}/api/add-order`, {
+  fetch(`${SERVER_IP}/api/order/add-order`, {
     method: "POST",
     body: JSON.stringify({
       order_item,
@@ -86,7 +86,7 @@ const finishEditOrder = (_id, order_item, quantity, ordered_by, updatedAt) => ({
 });
 
 export const editOrder = (id, order_item, quantity, ordered_by) => (dispatch) =>
-  fetch(`${SERVER_IP}/api/edit-order`, {
+  fetch(`${SERVER_IP}/api/order/edit-order`, {
     method: "POST",
     body: JSON.stringify({
       id,
@@ -116,7 +116,7 @@ const finishDeleteOrder = (_id) => ({
 });
 
 export const deleteOrder = (id) => (dispatch) =>
-  fetch(`${SERVER_IP}/api/delete-order`, {
+  fetch(`${SERVER_IP}/api/order/delete-order`, {
     method: "POST",
     body: JSON.stringify({ id }),
     headers: {
