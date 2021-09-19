@@ -86,10 +86,9 @@ const finishEditOrder = (_id, order_item, quantity, ordered_by, updatedAt) => ({
 });
 
 export const editOrder = (id, order_item, quantity, ordered_by) => (dispatch) =>
-  fetch(`${SERVER_IP}/api/order/edit-order`, {
-    method: "POST",
+  fetch(`${SERVER_IP}/api/order/edit-order/${id}`, {
+    method: "PATCH",
     body: JSON.stringify({
-      id,
       order_item,
       quantity,
       ordered_by,
@@ -116,12 +115,8 @@ const finishDeleteOrder = (_id) => ({
 });
 
 export const deleteOrder = (id) => (dispatch) =>
-  fetch(`${SERVER_IP}/api/order/delete-order`, {
-    method: "POST",
-    body: JSON.stringify({ id }),
-    headers: {
-      "Content-Type": "application/json",
-    },
+  fetch(`${SERVER_IP}/api/order/delete-order/${id}`, {
+    method: "DELETE",
   })
     .then((res) => res.json())
     .then((res) => {
