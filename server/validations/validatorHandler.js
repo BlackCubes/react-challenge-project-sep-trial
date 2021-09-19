@@ -11,6 +11,13 @@ Validator.register(
   "Please use at least one number, one special character, and one capital letter between 8 to 60 characters for the password."
 );
 
+// Validate Mongo ID
+Validator.register(
+  "regexMongoID",
+  (val) => regex.mongoID.test(val),
+  "Not a valid ID"
+);
+
 // Validate if a specific field in a DB exists.
 Validator.registerAsync("exist", (val, attribute, req, passes) => {
   if (!attribute) {
