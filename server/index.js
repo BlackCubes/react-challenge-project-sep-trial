@@ -4,7 +4,6 @@ const morgan = require("morgan");
 const bodyParser = require("body-parser");
 
 const authRoutes = require("./routes/auth.routes");
-const routes = require("./routes/public.routes");
 const { AppError, globalErrorHandler } = require("./errors");
 
 const app = express();
@@ -47,12 +46,16 @@ app.use((req, res, next) => {
 
 // use routes
 app.use("/api", authRoutes);
-app.use("/api", routes);
 
-// test route
+// test routes
 app.get("/", (req, res) => {
   console.log("Hi!");
   res.send("Hi!");
+});
+
+router.get("/test", (req, res) => {
+  console.log("Test endpoint hit!");
+  res.json({ success: true });
 });
 
 // Errors
