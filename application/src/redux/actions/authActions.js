@@ -20,7 +20,7 @@ const finishSignup = () => ({
 
 export const signupUser =
   (email, password, password_confirmation) => (dispatch) =>
-    fetch(`${SERVER_IP}/api/signup`, {
+    fetch(`${SERVER_IP}/api/auth/signup`, {
       method: "POST",
       body: JSON.stringify({
         email,
@@ -54,7 +54,7 @@ const finishLogin = (email, token) => {
 
 export const loginUser = (email, password) => {
   return (dispatch) => {
-    fetch(`${SERVER_IP}/api/login`, {
+    fetch(`${SERVER_IP}/api/auth/login`, {
       method: "POST",
       body: JSON.stringify({
         email,
