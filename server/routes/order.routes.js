@@ -8,12 +8,12 @@ router.get("/current-orders", orderController.getCurrentOrders);
 router.post("/add-order", orderValidation.addOrder, orderController.addOrder);
 router.post("/live-mode", orderController.liveModeOrder);
 router.patch(
-  "/edit-order",
+  "/edit-order/:id",
   orderValidation.updateOrder,
   orderController.updateOrder
 );
 router.delete(
-  "/delete-order",
+  "/delete-order/:id",
   orderValidation.deleteOrder,
   orderController.deleteOrder
 );

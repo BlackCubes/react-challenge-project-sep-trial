@@ -2,7 +2,7 @@ const Validator = require("validatorjs");
 const regex = require("./regex");
 const { AppError } = require("../errors");
 const Models = require("../models");
-const { capitalize } = require("../utils");
+const { capitalize, sanitize } = require("../utils");
 
 // Validate password
 Validator.register(
@@ -62,11 +62,17 @@ const validatorFunction = (body, rules, customMessages, cb) => {
   validation.fails(() => cb(validation.errors, false));
 };
 
-module.exports = (req, next, validationRule) =>
-  validatorFunction(req.body, validationRule, {}, (err, status) => {
+module.exports = (req, next, validationRule) => {
+  // If there are any ID in the params, extract it so it could be validated.
+  if (req.params.id) {
+    req.body.id = sanitize({ id: req.params.id }).id;
+  }
+
+  return validatorFunction(req.body, validationRule, {}, (err, status) => {
     if (!status) {
       return next(new AppError(`${errMsg(err.errors)}`, 400));
     }
 
     next();
   });
+};
