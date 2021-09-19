@@ -119,7 +119,7 @@ async function liveUpdate(index, limit) {
   const rand = Math.random();
   const orders = await Order.find();
 
-  const addRandom = () => {
+  const addRandom = async () => {
     const order_item = items[Math.floor(Math.random() * 3)];
     const quantity = Math.floor(Math.random() * 5);
     const ordered_by = "Live Updater";
@@ -133,7 +133,7 @@ async function liveUpdate(index, limit) {
     console.log(`Added Order - Step ${index + 1} of ${limit}`);
   };
 
-  const deleteRandom = () => {
+  const deleteRandom = async () => {
     const sorted = orders.sort((a, b) => {
       const aDate = new Date(a.createdAt);
       const bDate = new Date(b.createdAt);
