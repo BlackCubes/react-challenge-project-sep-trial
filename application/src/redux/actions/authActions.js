@@ -67,6 +67,7 @@ export const loginUser = (email, password) => {
       .then((response) => response.json())
       .then((response) => {
         if (response.success) {
+          localStorage.setItem("token", JSON.stringify(response.token));
           dispatch(finishLogin(response.email, response.token));
         } else {
           dispatch(finishAuthError(response.error));
@@ -79,6 +80,8 @@ export const loginUser = (email, password) => {
 
 // LOGOUT
 export const logoutUser = () => {
+  if (localStorage.getItem("token")) localStorage.removeItem("token");
+
   return {
     type: LOGOUT,
     payload: null,
