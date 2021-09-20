@@ -34,7 +34,7 @@ const Nav = ({ commenceLogoutUser, authEmail }) => {
         </div>
       </Link>
 
-      <Link to="#" className="nav-link">
+      <Link to="#" className="nav-link" id="profile-link">
         <div className="nav-link-style">
           <label className="nav-label">
             Profile:{" "}
