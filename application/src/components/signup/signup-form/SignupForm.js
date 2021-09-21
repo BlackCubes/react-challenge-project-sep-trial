@@ -3,12 +3,16 @@ import { connect } from "react-redux";
 import { signupUser } from "../../../redux/actions/authActions";
 import { checkErrors, checkHasInputs, validatorHandler } from "../../../utils";
 
+const mapStateToProps = (state) => ({
+  authLoading: state.auth.loading,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   commenceSignupUser: (email, password, password_confirmation) =>
     dispatch(signupUser(email, password, password_confirmation)),
 });
 
-const SignupForm = ({ commenceSignupUser }) => {
+const SignupForm = ({ authLoading, commenceSignupUser }) => {
   const [inputValues, setInputValues] = useState({
     email: "",
     password: "",
@@ -45,7 +49,11 @@ const SignupForm = ({ commenceSignupUser }) => {
   };
 
   return (
-    <form onSubmit={signupSubmit}>
+    <form
+      {...(!authLoading && {
+        onSubmit: signupSubmit,
+      })}
+    >
       <div className="form-group">
         <label htmlFor="signupEmail">Email</label>
 
@@ -95,10 +103,12 @@ const SignupForm = ({ commenceSignupUser }) => {
       </div>
 
       <div className="d-flex justify-content-center">
-        <button className="btn btn-primary">Signup</button>
+        <button className="btn btn-primary" disabled={authLoading}>
+          {!authLoading ? "Signup" : "...."}
+        </button>
       </div>
     </form>
   );
 };
 
-export default connect(null, mapDispatchToProps)(SignupForm);
+export default connect(mapStateToProps, mapDispatchToProps)(SignupForm);
