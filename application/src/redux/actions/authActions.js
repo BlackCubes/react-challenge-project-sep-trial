@@ -1,3 +1,4 @@
+import { createLoginUser, createUser } from "../../api/authAPI";
 import {
   AUTH_ERROR,
   AUTH_SUCCESS,
@@ -5,7 +6,7 @@ import {
   LOGOUT,
   SIGNUP,
 } from "../constants/authTypes";
-import { SERVER_IP } from "../../private";
+import { headers } from "../../utils";
 
 // AUTH SUCCESS
 export const finishAuthSuccess = (success) => ({
@@ -26,25 +27,14 @@ const finishSignup = () => ({
 
 export const signupUser =
   (email, password, password_confirmation) => (dispatch) =>
-    fetch(`${SERVER_IP}/api/auth/signup`, {
-      method: "POST",
-      body: JSON.stringify({
-        email,
-        password,
-        password_confirmation,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
+    createUser(email, password, password_confirmation, headers())
       .then((res) => {
-        if (!res.success) {
-          dispatch(finishAuthError(res.error));
-        }
-
         dispatch(finishSignup());
         dispatch(finishAuthSuccess(res.success));
+      })
+      .catch((err) => {
+        dispatch(finishAuthError(err.error));
+        dispatch(finishAuthSuccess(err.success));
       });
 
 // LOGIN
@@ -58,32 +48,18 @@ const finishLogin = (email, token) => {
   };
 };
 
-export const loginUser = (email, password) => {
-  return (dispatch) => {
-    fetch(`${SERVER_IP}/api/auth/login`, {
-      method: "POST",
-      body: JSON.stringify({
-        email,
-        password,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
+export const loginUser = (email, password) => (dispatch) =>
+  createLoginUser(email, password, headers())
+    .then((res) => {
+      localStorage.setItem("token", JSON.stringify(res.token));
+      localStorage.setItem("email", JSON.stringify(res.email));
+      dispatch(finishLogin(res.email, res.token));
+      dispatch(finishAuthSuccess(res.success));
     })
-      .then((response) => response.json())
-      .then((response) => {
-        if (response.success) {
-          localStorage.setItem("token", JSON.stringify(response.token));
-          localStorage.setItem("email", JSON.stringify(response.email));
-          dispatch(finishLogin(response.email, response.token));
-        } else {
-          dispatch(finishAuthError(response.error));
-        }
-
-        dispatch(finishAuthSuccess(response.success));
-      });
-  };
-};
+    .catch((err) => {
+      dispatch(finishAuthError(err.error));
+      dispatch(finishAuthSuccess(err.success));
+    });
 
 // LOGOUT
 export const logoutUser = () => {
