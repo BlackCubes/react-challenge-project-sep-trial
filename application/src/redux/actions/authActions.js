@@ -64,8 +64,6 @@ export const loginUser = (email, password) => (dispatch) => {
 
   return createLoginUser(email, password, headers())
     .then((res) => {
-      localStorage.setItem("token", JSON.stringify(res.token));
-      localStorage.setItem("email", JSON.stringify(res.email));
       dispatch(finishLogin(res.email, res.token));
       dispatch(finishAuthSuccess(res.success));
     })
@@ -77,12 +75,7 @@ export const loginUser = (email, password) => (dispatch) => {
 };
 
 // LOGOUT
-export const logoutUser = () => {
-  if (localStorage.getItem("token")) localStorage.removeItem("token");
-  if (localStorage.getItem("email")) localStorage.removeItem("email");
-
-  return {
-    type: LOGOUT_AUTH,
-    payload: null,
-  };
-};
+export const logoutUser = () => ({
+  type: LOGOUT_AUTH,
+  payload: null,
+});
