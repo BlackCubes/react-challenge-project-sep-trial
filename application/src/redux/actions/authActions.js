@@ -1,27 +1,27 @@
 import { createLoginUser, createUser } from "../../api/authAPI";
 import {
-  AUTH_ERROR,
-  AUTH_SUCCESS,
-  LOGIN,
-  LOGOUT,
-  SIGNUP,
+  ERROR_AUTH,
+  SUCCESS_AUTH,
+  LOGIN_AUTH,
+  LOGOUT_AUTH,
+  SIGNUP_AUTH,
 } from "../constants/authTypes";
 import { headers } from "../../utils";
 
 // AUTH SUCCESS
 export const finishAuthSuccess = (success) => ({
-  type: AUTH_SUCCESS,
+  type: SUCCESS_AUTH,
   payload: { success },
 });
 
 export const finishAuthError = (error) => ({
-  type: AUTH_ERROR,
+  type: ERROR_AUTH,
   payload: { error },
 });
 
 // SIGNUP
 const finishSignup = () => ({
-  type: SIGNUP,
+  type: SIGNUP_AUTH,
   payload: null,
 });
 
@@ -40,7 +40,7 @@ export const signupUser =
 // LOGIN
 const finishLogin = (email, token) => {
   return {
-    type: LOGIN,
+    type: LOGIN_AUTH,
     payload: {
       email,
       token,
@@ -67,7 +67,7 @@ export const logoutUser = () => {
   if (localStorage.getItem("email")) localStorage.removeItem("email");
 
   return {
-    type: LOGOUT,
+    type: LOGOUT_AUTH,
     payload: null,
   };
 };
