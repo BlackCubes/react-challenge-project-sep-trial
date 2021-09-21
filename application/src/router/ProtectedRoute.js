@@ -18,7 +18,7 @@ const ProtectedRoute = ({ authToken, authType, ...rest }) => {
 
   // If the user is logged in but the route(s) are for non-logged in users,
   // then redirect to the welcome page.
-  if (authType === "normal" && isAuth()) return <Redirect to="/" />;
+  if (authType === "normal" && isAuth()) return <Redirect to="/view-orders" />;
 
   // If the user is not logged in but the route(s) are for logged in users,
   // then redirect to the login page.
