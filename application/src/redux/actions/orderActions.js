@@ -44,7 +44,7 @@ export const currentOrders = () => (dispatch) => {
 
   return getCurrentOrders(headers())
     .then((res) => {
-      dispatch(finishCurrentOrders(res.data.orders));
+      dispatch(finishCurrentOrders(res.orders));
       dispatch(finishOrderSuccess(res.success));
     })
     .catch((err) => {
@@ -82,7 +82,7 @@ export const addOrder = (order_item, quantity, ordered_by) => (dispatch) => {
       const isoDate = new Date().toISOString();
       dispatch(
         finishAddOrder(
-          res.data.insertedId,
+          res.insertedId,
           order_item,
           quantity,
           ordered_by,
