@@ -23,6 +23,7 @@ const Login = ({ commenceFinishAuthSuccess, errorAuth, successAuth }) => {
       history.replace("/view-orders");
     }
   }, [successAuth]);
+  console.log(errorAuth);
 
   return (
     <div className="main-body">

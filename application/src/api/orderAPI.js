@@ -13,7 +13,7 @@ export const getCurrentOrders = (headers) =>
         axiosInit
           .get("/current-orders", headers)
           .then((res) => resolve(res.data))
-          .catch((err) => reject(err.response));
+          .catch((err) => reject(err.response.data));
       } catch (err) {
         reject("System error. Please try again later.");
       }
@@ -35,7 +35,7 @@ export const createOrder = (order_item, quantity, ordered_by, headers) =>
             headers
           )
           .then((res) => resolve(res.data))
-          .catch((err) => reject(err.response));
+          .catch((err) => reject(err.response.data));
       } catch (err) {
         reject("System error. Please try again later.");
       }
@@ -57,7 +57,7 @@ export const updateOrder = (id, order_item, quantity, ordered_by, headers) =>
             headers
           )
           .then((res) => resolve(res.data))
-          .catch((err) => reject(err.response));
+          .catch((err) => reject(err.response.data));
       } catch (err) {
         reject("System error. Please try again later.");
       }
@@ -71,7 +71,7 @@ export const removeOrder = (id, headers) =>
         axiosInit
           .delete(`/delete-order/${id}`, headers)
           .then((res) => resolve(res.data))
-          .catch((err) => reject(err.response));
+          .catch((err) => reject(err.response.data));
       } catch (err) {
         reject("System error. Please try again later.");
       }

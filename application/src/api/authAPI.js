@@ -21,7 +21,7 @@ export const createUser = (email, password, password_confirmation, headers) =>
             headers
           )
           .then((res) => resolve(res.data))
-          .catch((err) => reject(err.response));
+          .catch((err) => reject(err.response.data));
       } catch (err) {
         reject("System error. Please try again later.");
       }
@@ -35,7 +35,7 @@ export const createLoginUser = (email, password, headers) =>
         axiosInit
           .post("/login", { email, password }, headers)
           .then((res) => resolve(res.data))
-          .catch((err) => reject(err.response));
+          .catch((err) => reject(err.response.data));
       } catch (err) {
         reject("System error. Please try again later.");
       }
