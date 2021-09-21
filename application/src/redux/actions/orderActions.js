@@ -51,7 +51,7 @@ export const currentOrders = () => (dispatch) => {
       dispatch(finishOrderError(err.error));
       dispatch(finishOrderSuccess(err.success));
     })
-    .finally(() => finishOrderLoading(false));
+    .finally(() => dispatch(finishOrderLoading(false)));
 };
 
 // ADD ORDER
