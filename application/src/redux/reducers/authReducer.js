@@ -4,7 +4,7 @@ import {
   LOGIN,
   LOGOUT,
   SIGNUP,
-} from "../actions/types";
+} from "../constants/authTypes";
 
 const INITIAL_STATE = { email: null, token: null, success: false, error: "" };
 

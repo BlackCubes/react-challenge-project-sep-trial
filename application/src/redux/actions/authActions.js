@@ -1,4 +1,10 @@
-import { AUTH_ERROR, AUTH_SUCCESS, LOGIN, LOGOUT, SIGNUP } from "./types";
+import {
+  AUTH_ERROR,
+  AUTH_SUCCESS,
+  LOGIN,
+  LOGOUT,
+  SIGNUP,
+} from "../constants/authTypes";
 import { SERVER_IP } from "../../private";
 
 // AUTH SUCCESS
