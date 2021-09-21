@@ -2,15 +2,36 @@ import {
   ADD_ORDER,
   DELETE_ORDER,
   EDIT_ORDER,
+  ERROR_ORDER,
   GET_CURRENT_ORDERS,
-} from "../actions/types";
+  LOADING_ORDER,
+  SUCCESS_ORDER,
+} from "../constants/orderTypes";
 
 const INITIAL_STATE = {
+  loading: false,
   orders: [],
+  success: false,
+  error: "",
 };
 
 const orderReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case LOADING_ORDER:
+      return {
+        ...state,
+        loading: action.payload.loading,
+      };
+    case SUCCESS_ORDER:
+      return {
+        ...state,
+        success: action.payload.success,
+      };
+    case ERROR_ORDER:
+      return {
+        ...state,
+        error: action.payload.error,
+      };
     case GET_CURRENT_ORDERS:
       return {
         ...state,

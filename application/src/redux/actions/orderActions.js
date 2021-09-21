@@ -1,27 +1,58 @@
 import {
+  createOrder,
+  getCurrentOrders,
+  removeOrder,
+  updateOrder,
+} from "../../api/orderAPI";
+import {
   ADD_ORDER,
   DELETE_ORDER,
   EDIT_ORDER,
+  ERROR_ORDER,
   GET_CURRENT_ORDERS,
-} from "./types";
-import { SERVER_IP } from "../../private";
+  LOADING_ORDER,
+  SUCCESS_ORDER,
+} from "../constants/orderTypes";
+import { headers } from "../../utils";
+
+// ORDER LOADING
+export const finishOrderLoading = (loading) => ({
+  type: LOADING_ORDER,
+  payload: { loading },
+});
+
+// ORDER SUCCESS
+export const finishOrderSuccess = (success) => ({
+  type: SUCCESS_ORDER,
+  payload: { success },
+});
+
+// ORDER ERROR
+export const finishOrderError = (error) => ({
+  type: ERROR_ORDER,
+  payload: { error },
+});
 
 // GET CURRENT ORDERS
-const finishGetCurrentOrders = (orders) => ({
+const finishCurrentOrders = (orders) => ({
   type: GET_CURRENT_ORDERS,
   payload: { orders },
 });
 
-export const getCurrentOrders = () => (dispatch) =>
-  fetch(`${SERVER_IP}/api/order/current-orders`, {
-    method: "GET",
-  })
-    .then((res) => res.json())
+export const currentOrders = () => (dispatch) => {
+  dispatch(finishOrderLoading(true));
+
+  return getCurrentOrders(headers())
     .then((res) => {
-      if (res.success) {
-        dispatch(finishGetCurrentOrders(res.orders));
-      }
-    });
+      dispatch(finishCurrentOrders(res.orders));
+      dispatch(finishOrderSuccess(res.success));
+    })
+    .catch((err) => {
+      dispatch(finishOrderError(err.error));
+      dispatch(finishOrderSuccess(err.success));
+    })
+    .finally(() => dispatch(finishOrderLoading(false)));
+};
 
 // ADD ORDER
 const finishAddOrder = (
@@ -43,35 +74,30 @@ const finishAddOrder = (
   },
 });
 
-export const addOrder = (order_item, quantity, ordered_by) => (dispatch) =>
-  fetch(`${SERVER_IP}/api/order/add-order`, {
-    method: "POST",
-    body: JSON.stringify({
-      order_item,
-      quantity,
-      ordered_by,
-    }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((res) => {
-      if (res.success) {
-        const isoDate = new Date().toISOString();
+export const addOrder = (order_item, quantity, ordered_by) => (dispatch) => {
+  dispatch(finishOrderLoading(true));
 
-        dispatch(
-          finishAddOrder(
-            res.insertedId,
-            order_item,
-            quantity,
-            ordered_by,
-            isoDate,
-            isoDate
-          )
-        );
-      }
-    });
+  return createOrder(order_item, quantity, ordered_by, headers())
+    .then((res) => {
+      const isoDate = new Date().toISOString();
+      dispatch(
+        finishAddOrder(
+          res.insertedId,
+          order_item,
+          quantity,
+          ordered_by,
+          isoDate,
+          isoDate
+        )
+      );
+      dispatch(finishOrderSuccess(res.success));
+    })
+    .catch((err) => {
+      dispatch(finishOrderError(err.error));
+      dispatch(finishOrderSuccess(err.success));
+    })
+    .finally(() => dispatch(finishOrderLoading(false)));
+};
 
 // EDIT ORDER
 const finishEditOrder = (_id, order_item, quantity, ordered_by, updatedAt) => ({
@@ -85,28 +111,24 @@ const finishEditOrder = (_id, order_item, quantity, ordered_by, updatedAt) => ({
   },
 });
 
-export const editOrder = (id, order_item, quantity, ordered_by) => (dispatch) =>
-  fetch(`${SERVER_IP}/api/order/edit-order/${id}`, {
-    method: "PATCH",
-    body: JSON.stringify({
-      order_item,
-      quantity,
-      ordered_by,
-    }),
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((res) => res.json())
-    .then((res) => {
-      if (res.success) {
-        const updatedAt = new Date().toISOString();
+export const editOrder =
+  (id, order_item, quantity, ordered_by) => (dispatch) => {
+    dispatch(finishOrderLoading(true));
 
+    return updateOrder(id, order_item, quantity, ordered_by, headers())
+      .then((res) => {
+        const updatedAt = new Date().toISOString();
         dispatch(
           finishEditOrder(id, order_item, quantity, ordered_by, updatedAt)
         );
-      }
-    });
+        dispatch(finishOrderSuccess(res.success));
+      })
+      .catch((err) => {
+        dispatch(finishOrderError(err.error));
+        dispatch(finishOrderSuccess(err.success));
+      })
+      .finally(() => dispatch(finishOrderLoading(false)));
+  };
 
 // DELETE ORDER
 const finishDeleteOrder = (_id) => ({
@@ -114,13 +136,17 @@ const finishDeleteOrder = (_id) => ({
   payload: { _id },
 });
 
-export const deleteOrder = (id) => (dispatch) =>
-  fetch(`${SERVER_IP}/api/order/delete-order/${id}`, {
-    method: "DELETE",
-  })
-    .then((res) => res.json())
+export const deleteOrder = (id) => (dispatch) => {
+  dispatch(finishOrderLoading(true));
+
+  return removeOrder(id, headers())
     .then((res) => {
-      if (res.success) {
-        dispatch(finishDeleteOrder(id));
-      }
-    });
+      dispatch(finishDeleteOrder(id));
+      dispatch(finishOrderSuccess(res.success));
+    })
+    .catch((err) => {
+      dispatch(finishOrderError(err.error));
+      dispatch(finishOrderSuccess(err.success));
+    })
+    .finally(() => dispatch(finishOrderLoading(false)));
+};

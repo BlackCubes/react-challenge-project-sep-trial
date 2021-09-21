@@ -3,15 +3,15 @@ import { connect } from "react-redux";
 import { Template } from "../../components";
 import OrdersList from "./ordersList";
 import "./viewOrders.css";
-import { getCurrentOrders } from "../../redux/actions/orderActions";
+import { currentOrders } from "../../redux/actions/orderActions";
 
 const mapDispatchToProps = (dispatch) => ({
-  commenceGetCurrentOrders: () => dispatch(getCurrentOrders()),
+  commenceCurrentOrders: () => dispatch(currentOrders()),
 });
 
-const ViewOrders = ({ commenceGetCurrentOrders }) => {
+const ViewOrders = ({ commenceCurrentOrders }) => {
   useEffect(() => {
-    commenceGetCurrentOrders();
+    commenceCurrentOrders();
   }, []);
 
   return (

@@ -37,10 +37,7 @@ const Nav = ({ commenceLogoutUser, authEmail }) => {
       <Link to="#" className="nav-link" id="profile-link">
         <div className="nav-link-style">
           <label className="nav-label">
-            Profile:{" "}
-            {authEmail ??
-              JSON.parse(localStorage.getItem("email")) ??
-              "No email"}
+            Profile: {authEmail ?? "No email"}
           </label>
         </div>
       </Link>
