@@ -7,19 +7,19 @@ import {
 import { SERVER_IP } from "../../private";
 
 // GET CURRENT ORDERS
-const finishGetCurrentOrders = (orders) => ({
+const finishCurrentOrders = (orders) => ({
   type: GET_CURRENT_ORDERS,
   payload: { orders },
 });
 
-export const getCurrentOrders = () => (dispatch) =>
+export const currentOrders = () => (dispatch) =>
   fetch(`${SERVER_IP}/api/order/current-orders`, {
     method: "GET",
   })
     .then((res) => res.json())
     .then((res) => {
       if (res.success) {
-        dispatch(finishGetCurrentOrders(res.orders));
+        dispatch(finishCurrentOrders(res.orders));
       }
     });
 
