@@ -1,12 +1,19 @@
 import { createLoginUser, createUser } from "../../api/authAPI";
 import {
   ERROR_AUTH,
-  SUCCESS_AUTH,
+  LOADING_AUTH,
   LOGIN_AUTH,
   LOGOUT_AUTH,
   SIGNUP_AUTH,
+  SUCCESS_AUTH,
 } from "../constants/authTypes";
 import { headers } from "../../utils";
+
+// AUTH LOADING
+export const finishAuthLoading = (loading) => ({
+  type: LOADING_AUTH,
+  payload: { loading },
+});
 
 // AUTH SUCCESS
 export const finishAuthSuccess = (success) => ({
@@ -26,8 +33,10 @@ const finishSignup = () => ({
 });
 
 export const signupUser =
-  (email, password, password_confirmation) => (dispatch) =>
-    createUser(email, password, password_confirmation, headers())
+  (email, password, password_confirmation) => (dispatch) => {
+    dispatch(finishAuthLoading(true));
+
+    return createUser(email, password, password_confirmation, headers())
       .then((res) => {
         dispatch(finishSignup());
         dispatch(finishAuthSuccess(res.success));
@@ -35,7 +44,9 @@ export const signupUser =
       .catch((err) => {
         dispatch(finishAuthError(err.error));
         dispatch(finishAuthSuccess(err.success));
-      });
+      })
+      .finally(() => dispatch(finishAuthLoading(false)));
+  };
 
 // LOGIN
 const finishLogin = (email, token) => {
@@ -48,8 +59,10 @@ const finishLogin = (email, token) => {
   };
 };
 
-export const loginUser = (email, password) => (dispatch) =>
-  createLoginUser(email, password, headers())
+export const loginUser = (email, password) => (dispatch) => {
+  dispatch(finishAuthLoading(true));
+
+  return createLoginUser(email, password, headers())
     .then((res) => {
       localStorage.setItem("token", JSON.stringify(res.token));
       localStorage.setItem("email", JSON.stringify(res.email));
@@ -59,7 +72,9 @@ export const loginUser = (email, password) => (dispatch) =>
     .catch((err) => {
       dispatch(finishAuthError(err.error));
       dispatch(finishAuthSuccess(err.success));
-    });
+    })
+    .finally(() => dispatch(finishAuthLoading(false)));
+};
 
 // LOGOUT
 export const logoutUser = () => {

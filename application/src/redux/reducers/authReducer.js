@@ -1,15 +1,27 @@
 import {
   ERROR_AUTH,
-  SUCCESS_AUTH,
+  LOADING_AUTH,
   LOGIN_AUTH,
   LOGOUT_AUTH,
   SIGNUP_AUTH,
+  SUCCESS_AUTH,
 } from "../constants/authTypes";
 
-const INITIAL_STATE = { email: null, token: null, success: false, error: "" };
+const INITIAL_STATE = {
+  loading: false,
+  email: null,
+  token: null,
+  success: false,
+  error: "",
+};
 
 const authReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case LOADING_AUTH:
+      return {
+        ...state,
+        loading: action.payload.loading,
+      };
     case SUCCESS_AUTH:
       return {
         ...state,
