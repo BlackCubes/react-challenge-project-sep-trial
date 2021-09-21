@@ -4,6 +4,7 @@ import { deleteOrder, editOrder } from "../../redux/actions/orderActions";
 import { localTimeStringMilitary } from "../../utils";
 
 const mapStateToProps = (state) => ({
+  orderLoading: state.order.loading,
   orders: state.order.orders,
 });
 
@@ -13,7 +14,12 @@ const mapStateToDispatch = (dispatch) => ({
     dispatch(editOrder(id, order_item, quantity, ordered_by)),
 });
 
-const OrdersList = ({ commenceDeleteOrder, commenceEditOrder, orders }) => {
+const OrdersList = ({
+  commenceDeleteOrder,
+  commenceEditOrder,
+  orderLoading,
+  orders,
+}) => {
   if (!orders || !orders.length)
     return (
       <div className="empty-orders">
@@ -34,20 +40,25 @@ const OrdersList = ({ commenceDeleteOrder, commenceEditOrder, orders }) => {
       <div className="col-md-4 view-order-right-col">
         <button
           className="btn btn-success"
-          onClick={() =>
-            commenceEditOrder(
-              order._id,
-              order.order_item,
-              order.quantity,
-              "Elias Gutierrez"
-            )
-          }
+          {...(!orderLoading && {
+            onClick: () =>
+              commenceEditOrder(
+                order._id,
+                order.order_item,
+                order.quantity,
+                "Elias Gutierrez"
+              ),
+          })}
+          disabled={orderLoading}
         >
           Edit
         </button>
         <button
           className="btn btn-danger"
-          onClick={() => commenceDeleteOrder(order._id)}
+          {...(!orderLoading && {
+            onClick: () => commenceDeleteOrder(order._id),
+          })}
+          disabled={orderLoading}
         >
           Delete
         </button>
