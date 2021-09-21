@@ -3,7 +3,7 @@ import {
   DELETE_ORDER,
   EDIT_ORDER,
   GET_CURRENT_ORDERS,
-} from "../actions/types";
+} from "../constants/orderTypes";
 
 const INITIAL_STATE = {
   orders: [],

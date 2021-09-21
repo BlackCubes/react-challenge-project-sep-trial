@@ -3,7 +3,7 @@ import {
   DELETE_ORDER,
   EDIT_ORDER,
   GET_CURRENT_ORDERS,
-} from "./types";
+} from "../constants/orderTypes";
 import { SERVER_IP } from "../../private";
 
 // GET CURRENT ORDERS
