@@ -3,13 +3,17 @@ import { connect } from "react-redux";
 import { loginUser } from "../../../redux/actions/authActions";
 import { checkErrors, checkHasInputs, validatorHandler } from "../../../utils";
 
+const mapStateToProps = (state) => ({
+  authLoading: state.auth.loading,
+});
+
 const mapActionsToProps = (dispatch) => ({
   commenceLogin(email, password) {
     dispatch(loginUser(email, password));
   },
 });
 
-const LoginForm = ({ commenceLogin }) => {
+const LoginForm = ({ authLoading, commenceLogin }) => {
   const [inputValues, setInputValues] = useState({
     email: "",
     password: "",
@@ -44,7 +48,11 @@ const LoginForm = ({ commenceLogin }) => {
   };
 
   return (
-    <form onSubmit={loginSubmit}>
+    <form
+      {...(!authLoading && {
+        onSubmit: loginSubmit,
+      })}
+    >
       <div className="form-group">
         <label htmlFor="loginEmail">Email</label>
 
@@ -77,12 +85,16 @@ const LoginForm = ({ commenceLogin }) => {
       </div>
 
       <div className="d-flex justify-content-center">
-        <button type="submit" className="btn btn-primary">
-          Login
+        <button
+          type="submit"
+          className="btn btn-primary"
+          disabled={authLoading}
+        >
+          {!authLoading ? "Login" : "...."}
         </button>
       </div>
     </form>
   );
 };
 
-export default connect(null, mapActionsToProps)(LoginForm);
+export default connect(mapStateToProps, mapActionsToProps)(LoginForm);
