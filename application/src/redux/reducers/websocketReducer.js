@@ -28,7 +28,6 @@ const websocketReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         loaded: true,
-        socketId: action.result.socketId,
         error: "",
       };
     case CONNECT_WEBSOCKET_ERROR:
@@ -36,7 +35,6 @@ const websocketReducer = (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         loaded: false,
-        socketId: "",
         error: action.error,
       };
     case RECEIVE_WEBSOCKET:
