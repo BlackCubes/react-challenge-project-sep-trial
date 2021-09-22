@@ -58,7 +58,8 @@ app.use((req, res, next) => {
 
 io.on("connection", (socket) => {
   console.log("A user connected.");
-  socket.emit("event://socket-id", socket.id);
+  socket.emit("event://socket-id", { success: true, socketId: socket.id });
+  socket.emit("event://socket-message", { message: "Connected to socket." });
 });
 
 // use routes
