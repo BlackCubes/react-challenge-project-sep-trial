@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
+const { Server } = require("socket.io");
 
 const { authRoutes, orderRoutes } = require("./routes");
 const { AppError, globalErrorHandler } = require("./errors");
@@ -44,6 +45,22 @@ app.use((req, res, next) => {
   next();
 });
 
+const server = app.listen(port, () => {
+  console.log(`Listening on port ${port}`);
+});
+
+const io = new Server(server);
+
+app.use((req, res, next) => {
+  req.io = io;
+  next();
+});
+
+io.on("connection", (socket) => {
+  console.log("A user connected.");
+  socket.emit("event://socket-id", socket.id);
+});
+
 // use routes
 app.use("/api/auth", authRoutes);
 app.use("/api/order", orderRoutes);
@@ -67,7 +84,3 @@ app.all("*", (req, res, next) =>
 
 // --- global errors
 app.use(globalErrorHandler);
-
-app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
-});
