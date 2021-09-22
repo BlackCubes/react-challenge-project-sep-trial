@@ -112,8 +112,8 @@ const liveUpdate = (index, limit) => async (req, res, next) => {
     req.io.emit("event://order-add", {
       success: true,
       order: orderData,
-      message,
     });
+    req.io.emit("event://socket-message", { message });
   };
 
   const deleteRandom = async () => {
@@ -137,8 +137,8 @@ const liveUpdate = (index, limit) => async (req, res, next) => {
     req.io.emit("event://order-delete", {
       success: true,
       deletedId: target,
-      message,
     });
+    req.io.emit("event://socket-message", { message });
   };
 
   if (orders.length < 3) {
@@ -170,7 +170,7 @@ exports.liveModeOrder = catchAsync(async (req, res, next) => {
       setTimeout(() => {
         const message = "Live mode ending after the next step...";
         console.log(message);
-        req.io.emit("event://order-message", { message });
+        req.io.emit("event://socket-message", { message });
       }, i * secsPerUpdate * 1000);
     }
   }
