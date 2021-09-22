@@ -1,5 +1,4 @@
-export const SUCCESS_WEBSOCKET = "websocket/success";
-export const ERROR_WEBSOCKET = "websocket/error";
-export const LISTEN_WEBSOCKET = "websocket/listen";
 export const CONNECT_WEBSOCKET = "websocket/connect";
+export const CONNECT_WEBSOCKET_SUCCESS = "websocket/connect-success";
+export const CONNECT_WEBSOCKET_ERROR = "websocket/connect-error";
 export const MESSAGE_WEBSOCKET = "websocket/message";
