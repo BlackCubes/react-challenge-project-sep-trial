@@ -4,9 +4,9 @@ import {
 } from "../constants/websocketTypes";
 
 // WEBSOCKET CONNECT
-export const websocketConnect = () => ({
+export const websocketConnect = (socketId) => ({
   type: CONNECT_WEBSOCKET,
-  payload: null,
+  payload: { socketId },
 });
 
 // WEBSOCKET MESSAGE
