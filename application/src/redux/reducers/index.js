@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 import TempReducer from "./tempReducer";
 import authReducer from "./authReducer";
 import orderReducer from "./orderReducer";
+import websocketReducer from "./websocketReducer";
 
 const persistConfig = {
   key: "root",
@@ -14,6 +15,7 @@ const rootReducer = combineReducers({
   temp: TempReducer,
   auth: authReducer,
   order: orderReducer,
+  websocket: websocketReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);
