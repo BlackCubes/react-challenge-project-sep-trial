@@ -1,24 +1,52 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { logoutUser } from "../../redux/actions/authActions";
+import {
+  websocketAddOrder,
+  websocketConnect,
+  websocketDeleteOrder,
+  websocketMessage,
+} from "../../redux/actions/websocketActions";
 import "./nav.css";
 
 const mapStateToProps = (state) => ({
   authEmail: state.auth.email,
+  socketMessage: state.websocket.message,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   commenceLogoutUser: () => dispatch(logoutUser()),
+  commenceWebsocketAddOrder: () => dispatch(websocketAddOrder()),
+  commenceWebsocketConnect: () => dispatch(websocketConnect()),
+  commenceWebsocketDeleteOrder: () => dispatch(websocketDeleteOrder()),
+  commenceWebsocketMessage: () => dispatch(websocketMessage()),
 });
 
-const Nav = ({ commenceLogoutUser, authEmail }) => {
+const Nav = ({
+  commenceLogoutUser,
+  commenceWebsocketAddOrder,
+  commenceWebsocketConnect,
+  commenceWebsocketDeleteOrder,
+  commenceWebsocketMessage,
+  authEmail,
+  socketMessage,
+}) => {
   const history = useHistory();
 
   const logoutOnClick = () => {
     commenceLogoutUser();
     history.replace("/");
   };
+
+  useEffect(() => {
+    commenceWebsocketConnect();
+    commenceWebsocketMessage();
+
+    commenceWebsocketAddOrder();
+    commenceWebsocketDeleteOrder();
+  }, []);
+  console.log("Socket message: ", socketMessage);
 
   return (
     <div className="nav-strip">
