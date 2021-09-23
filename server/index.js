@@ -49,7 +49,12 @@ const server = app.listen(port, () => {
   console.log(`Listening on port ${port}`);
 });
 
-const io = new Server(server);
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:3000",
+    methods: ["GET", "POST"],
+  },
+});
 
 app.use((req, res, next) => {
   req.io = io;
