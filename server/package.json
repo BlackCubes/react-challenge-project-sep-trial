@@ -18,6 +18,7 @@
     "mongoose": "^5.13.9",
     "morgan": "^1.10.0",
     "sanitize-html": "^2.5.1",
+    "socket.io": "^4.2.0",
     "validator": "^13.6.0",
     "validatorjs": "^3.22.1"
   },

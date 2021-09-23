@@ -89,32 +89,7 @@ exports.deleteAllOrders = catchAsync(async (req, res, next) => {
   res.status(200).json({ success: true, deleted: deletedOrders.n });
 });
 
-exports.liveModeOrder = catchAsync(async (req, res, next) => {
-  const { time } = sanitize(filterObject(req.body, "time"));
-
-  const secsPerUpdate = !req.body || isNaN(time) ? 5 : time;
-
-  res.status(200).json({ success: true });
-
-  const limit = 12;
-  let count = 0;
-
-  for (let i = 0; i < limit; i++) {
-    setTimeout(() => {
-      liveUpdate(count, limit);
-      count++;
-    }, i * secsPerUpdate * 1000);
-
-    if (i === limit - 1) {
-      setTimeout(
-        () => console.log("Live mode ending after the next step..."),
-        i * secsPerUpdate * 1000
-      );
-    }
-  }
-});
-
-async function liveUpdate(index, limit) {
+const liveUpdate = (index, limit) => async (req, res, next) => {
   const items = ["Live Soup", "Live Pasta", "Live Steak"];
   const rand = Math.random();
   const orders = await Order.find();
@@ -130,7 +105,15 @@ async function liveUpdate(index, limit) {
       ordered_by,
     });
 
-    console.log(`Added Order - Step ${index + 1} of ${limit}`);
+    const message = `Added Order - Step ${index + 1} of ${limit}`;
+
+    console.log(message);
+
+    req.io.emit("event://order-add", {
+      success: true,
+      order: orderData,
+    });
+    req.io.emit("event://socket-message", { message });
   };
 
   const deleteRandom = async () => {
@@ -147,7 +130,15 @@ async function liveUpdate(index, limit) {
 
     const deletedOrder = await Order.findByIdAndDelete(target);
 
-    console.log(`Deleted Order - Step ${index + 1} of ${limit}`);
+    const message = `Deleted Order - Step ${index + 1} of ${limit}`;
+
+    console.log(message);
+
+    req.io.emit("event://order-delete", {
+      success: true,
+      deletedId: target,
+    });
+    req.io.emit("event://socket-message", { message });
   };
 
   if (orders.length < 3) {
@@ -157,4 +148,30 @@ async function liveUpdate(index, limit) {
   } else {
     rand > 0.5 ? addRandom() : deleteRandom();
   }
-}
+};
+
+exports.liveModeOrder = catchAsync(async (req, res, next) => {
+  const { time } = sanitize(filterObject(req.body, "time"));
+
+  const secsPerUpdate = !req.body || isNaN(time) ? 5 : time;
+
+  res.status(200).json({ success: true });
+
+  const limit = 12;
+  let count = 0;
+
+  for (let i = 0; i < limit; i++) {
+    setTimeout(() => {
+      liveUpdate(count, limit)(req, res, next);
+      count++;
+    }, i * secsPerUpdate * 1000);
+
+    if (i === limit - 1) {
+      setTimeout(() => {
+        const message = "Live mode ending after the next step...";
+        console.log(message);
+        req.io.emit("event://socket-message", { message });
+      }, i * secsPerUpdate * 1000);
+    }
+  }
+});

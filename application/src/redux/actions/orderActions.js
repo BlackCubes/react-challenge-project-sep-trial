@@ -1,4 +1,5 @@
 import {
+  createLiveOrder,
   createOrder,
   getCurrentOrders,
   removeOrder,
@@ -10,6 +11,7 @@ import {
   EDIT_ORDER,
   ERROR_ORDER,
   GET_CURRENT_ORDERS,
+  LIVE_ORDER,
   LOADING_ORDER,
   SUCCESS_ORDER,
 } from "../constants/orderTypes";
@@ -55,7 +57,7 @@ export const currentOrders = () => (dispatch) => {
 };
 
 // ADD ORDER
-const finishAddOrder = (
+export const finishAddOrder = (
   _id,
   order_item,
   quantity,
@@ -131,7 +133,7 @@ export const editOrder =
   };
 
 // DELETE ORDER
-const finishDeleteOrder = (_id) => ({
+export const finishDeleteOrder = (_id) => ({
   type: DELETE_ORDER,
   payload: { _id },
 });
@@ -142,6 +144,27 @@ export const deleteOrder = (id) => (dispatch) => {
   return removeOrder(id, headers())
     .then((res) => {
       dispatch(finishDeleteOrder(id));
+      dispatch(finishOrderSuccess(res.success));
+    })
+    .catch((err) => {
+      dispatch(finishOrderError(err.error));
+      dispatch(finishOrderSuccess(err.success));
+    })
+    .finally(() => dispatch(finishOrderLoading(false)));
+};
+
+// LIVE ORDER
+const finishLiveOrder = () => ({
+  type: LIVE_ORDER,
+  payload: null,
+});
+
+export const liveOrder = (time) => (dispatch) => {
+  dispatch(finishOrderLoading(true));
+
+  return createLiveOrder(time, headers())
+    .then((res) => {
+      dispatch(finishLiveOrder());
       dispatch(finishOrderSuccess(res.success));
     })
     .catch((err) => {

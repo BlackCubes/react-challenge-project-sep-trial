@@ -4,6 +4,7 @@ import {
   EDIT_ORDER,
   ERROR_ORDER,
   GET_CURRENT_ORDERS,
+  LIVE_ORDER,
   LOADING_ORDER,
   SUCCESS_ORDER,
 } from "../constants/orderTypes";
@@ -76,6 +77,8 @@ const orderReducer = (state = INITIAL_STATE, action) => {
           (order) => order._id !== action.payload._id
         ),
       };
+    case LIVE_ORDER:
+      return { ...state };
     default:
       return state;
   }
