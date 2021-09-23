@@ -57,7 +57,7 @@ export const currentOrders = () => (dispatch) => {
 };
 
 // ADD ORDER
-const finishAddOrder = (
+export const finishAddOrder = (
   _id,
   order_item,
   quantity,
@@ -133,7 +133,7 @@ export const editOrder =
   };
 
 // DELETE ORDER
-const finishDeleteOrder = (_id) => ({
+export const finishDeleteOrder = (_id) => ({
   type: DELETE_ORDER,
   payload: { _id },
 });
