@@ -45,12 +45,12 @@ export const websocketAddOrder = () => (dispatch) => {
   const finishWebsocketAddOrder = (data) =>
     dispatch(
       finishAddOrder(
-        data._id,
-        data.order_item,
-        data.quantity,
-        data.ordered_by,
-        data.createdAt,
-        data.updatedAt
+        data.order._id,
+        data.order.order_item,
+        data.order.quantity,
+        data.order.ordered_by,
+        data.order.createdAt,
+        data.order.updatedAt
       )
     );
 
