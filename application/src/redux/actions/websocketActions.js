@@ -1,3 +1,4 @@
+import { finishAddOrder, finishDeleteOrder } from "../actions/orderActions";
 import {
   CONNECT_WEBSOCKET,
   CONNECT_WEBSOCKET_ERROR,
@@ -36,5 +37,48 @@ export const websocketMessage = () => (dispatch) => {
     ],
     promise: (socket) =>
       socket.on("event://socket-message", finishWebsocketMessage),
+  });
+};
+
+// WEBSOCKET ADD ORDER
+export const websocketAddOrder = () => (dispatch) => {
+  const finishWebsocketAddOrder = (data) =>
+    dispatch(
+      finishAddOrder(
+        data._id,
+        data.order_item,
+        data.quantity,
+        data.ordered_by,
+        data.createdAt,
+        data.updatedAt
+      )
+    );
+
+  return dispatch({
+    type: "socket",
+    types: [
+      RECEIVE_WEBSOCKET,
+      RECEIVE_WEBSOCKET_SUCCESS,
+      RECEIVE_WEBSOCKET_ERROR,
+    ],
+    promise: (socket) =>
+      socket.on("event://order-add", finishWebsocketAddOrder),
+  });
+};
+
+// WEBSOCKET DELETE ORDER
+export const websocketDeleteOrder = () => (dispatch) => {
+  const finishWebsocketDeleteOrder = (data) =>
+    dispatch(finishDeleteOrder(data.deletedId));
+
+  return dispatch({
+    type: "socket",
+    types: [
+      RECEIVE_WEBSOCKET,
+      RECEIVE_WEBSOCKET_SUCCESS,
+      RECEIVE_WEBSOCKET_ERROR,
+    ],
+    promise: (socket) =>
+      socket.on("event://order-delete", finishWebsocketDeleteOrder),
   });
 };
