@@ -77,3 +77,17 @@ export const removeOrder = (id, headers) =>
       }
     })
   );
+
+export const createLiveOrder = (time, headers) =>
+  new Promise((resolve, reject) =>
+    setTimeout(() => {
+      try {
+        axiosInit
+          .post(`/live-order`, { time }, headers)
+          .then((res) => resolve(res.data))
+          .catch((err) => reject(err.response.data));
+      } catch (erro) {
+        reject("System error. Please try again later.");
+      }
+    })
+  );
