@@ -20,9 +20,6 @@ const Snackbar = ({
 }) => {
   if (!snackbarMessages.length) return null;
 
-  console.log("snackbarMessages: ", snackbarMessages);
-  console.log("snackbarCount: ", snackbarCount);
-
   return ReactDOM.createPortal(
     <div
       className={`snackbar ${snackbarMessages[0].color} show`}
