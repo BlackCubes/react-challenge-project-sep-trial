@@ -1,7 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
-const bodyParser = require("body-parser");
 const { Server } = require("socket.io");
 
 const { authRoutes, orderRoutes } = require("./routes");
@@ -28,8 +27,8 @@ mongoose.connection.on("error", (err) => {
 app.use(morgan("dev"));
 
 // bodyparser
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 
 // CORS
 // This allows client applications from other domains use the API Server
