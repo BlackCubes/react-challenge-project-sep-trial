@@ -8,7 +8,7 @@ import {
   websocketDeleteOrder,
   websocketMessage,
 } from "../../redux/actions/websocketActions";
-import "./nav.css";
+import "./AuthNav.css";
 
 const mapStateToProps = (state) => ({
   authEmail: state.auth.email,
