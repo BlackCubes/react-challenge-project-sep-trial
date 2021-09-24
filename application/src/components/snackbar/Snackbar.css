@@ -2,8 +2,6 @@
   position: fixed;
   bottom: 48px;
   left: 50%;
-  font-size: 25.6px;
-  font-weight: 400;
   text-align: center;
   color: white;
   min-width: 400px;
@@ -13,8 +11,39 @@
   visibility: hidden;
 }
 
+.snackbar p {
+  margin: 0;
+}
+
 .snackbar.show {
   visibility: visible;
+}
+
+.snackbar-button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-size: 12px;
+}
+
+.snackbar-button button {
+  background-color: rgb(29 33 36 / 11%);
+  border-top: none;
+  border-left: none;
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  border-bottom-right-radius: 3.2px;
+}
+
+.snackbar-content p {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.snackbar-count {
+  position: absolute;
+  top: 0;
+  right: 7px;
 }
 
 .snackbar.green {
