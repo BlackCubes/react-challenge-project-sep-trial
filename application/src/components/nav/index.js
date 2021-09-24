@@ -1,3 +1,3 @@
-import AuthNav from "./AuthNav";
+import NavAuth from "./NavAuth";
 
-export default AuthNav;
+export default NavAuth;
