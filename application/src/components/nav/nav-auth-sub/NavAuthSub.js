@@ -8,7 +8,7 @@ import {
   websocketDeleteOrder,
   websocketMessage,
 } from "../../redux/actions/websocketActions";
-import "./AuthNav.css";
+import "./NavAuthSub.css";
 
 const mapStateToProps = (state) => ({
   authEmail: state.auth.email,
@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch) => ({
   commenceWebsocketMessage: () => dispatch(websocketMessage()),
 });
 
-const Nav = ({
+const NavAuthSub = ({
   commenceLogoutUser,
   commenceWebsocketAddOrder,
   commenceWebsocketConnect,
@@ -78,4 +78,4 @@ const Nav = ({
     </div>
   );
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Nav);
+export default connect(mapStateToProps, mapDispatchToProps)(NavAuthSub);

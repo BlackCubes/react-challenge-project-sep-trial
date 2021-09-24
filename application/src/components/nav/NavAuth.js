@@ -1,7 +1,7 @@
 import React from "react";
-import "./NormalNav.css";
+import "./NavAuth.css";
 
-const NormalNav = (props) => {
+const NavAuth = (props) => {
   return (
     <div className="bg-layer">
       <div className="fg-layer">
@@ -12,4 +12,4 @@ const NormalNav = (props) => {
   );
 };
 
-export default NormalNav;
+export default NavAuth;
