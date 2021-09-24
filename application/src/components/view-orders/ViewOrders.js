@@ -14,8 +14,12 @@ const ViewOrders = ({ commenceCurrentOrders }) => {
   }, []);
 
   return (
-    <div className="container-fluid">
-      <OrdersList />
+    <div className="bg-layer">
+      <div className="fg-layer">
+        <div className="container-fluid">
+          <OrdersList />
+        </div>
+      </div>
     </div>
   );
 };

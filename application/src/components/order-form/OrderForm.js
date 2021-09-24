@@ -28,62 +28,66 @@ const OrderForm = ({ authEmail, commenceAddOrder, orderLoading }) => {
   };
 
   return (
-    <div className="form-wrapper">
-      <form>
-        <label className="form-label">I'd like to order...</label>
+    <div className="bg-layer">
+      <div className="fg-layer">
+        <div className="form-wrapper">
+          <form>
+            <label className="form-label">I'd like to order...</label>
 
-        <br />
+            <br />
 
-        <select
-          value={orderItem}
-          onChange={menuItemChosen}
-          className="menu-select"
-        >
-          <option value="" defaultValue disabled hidden>
-            Lunch menu
-          </option>
+            <select
+              value={orderItem}
+              onChange={menuItemChosen}
+              className="menu-select"
+            >
+              <option value="" defaultValue disabled hidden>
+                Lunch menu
+              </option>
 
-          <option value="Soup of the Day">Soup of the Day</option>
+              <option value="Soup of the Day">Soup of the Day</option>
 
-          <option value="Linguini With White Wine Sauce">
-            Linguini With White Wine Sauce
-          </option>
+              <option value="Linguini With White Wine Sauce">
+                Linguini With White Wine Sauce
+              </option>
 
-          <option value="Eggplant and Mushroom Panini">
-            Eggplant and Mushroom Panini
-          </option>
+              <option value="Eggplant and Mushroom Panini">
+                Eggplant and Mushroom Panini
+              </option>
 
-          <option value="Chili Con Carne">Chili Con Carne</option>
-        </select>
+              <option value="Chili Con Carne">Chili Con Carne</option>
+            </select>
 
-        <br />
+            <br />
 
-        <label className="qty-label">Qty:</label>
-        <select value={quantity} onChange={menuQuantityChosen}>
-          <option value="1">1</option>
+            <label className="qty-label">Qty:</label>
+            <select value={quantity} onChange={menuQuantityChosen}>
+              <option value="1">1</option>
 
-          <option value="2">2</option>
+              <option value="2">2</option>
 
-          <option value="3">3</option>
+              <option value="3">3</option>
 
-          <option value="4">4</option>
+              <option value="4">4</option>
 
-          <option value="5">5</option>
+              <option value="5">5</option>
 
-          <option value="6">6</option>
-        </select>
+              <option value="6">6</option>
+            </select>
 
-        <button
-          type="button"
-          className="order-btn"
-          {...(!orderLoading && {
-            onClick: submitOrder,
-          })}
-          disabled={orderLoading}
-        >
-          {!orderLoading ? "Order It!" : "...."}
-        </button>
-      </form>
+            <button
+              type="button"
+              className="order-btn"
+              {...(!orderLoading && {
+                onClick: submitOrder,
+              })}
+              disabled={orderLoading}
+            >
+              {!orderLoading ? "Order It!" : "...."}
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };
