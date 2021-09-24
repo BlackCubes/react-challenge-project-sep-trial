@@ -1,16 +1,44 @@
-import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Main, Login, OrderFormHook, ViewOrdersHook } from '../components';
+import React from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import ProtectedRoute from "./ProtectedRoute";
+import { Main, Login, OrderForm, Signup, ViewOrders } from "../components";
 
 const AppRouter = (props) => {
   return (
     <Router>
-      <Route path="/" exact component={Main} />
-      <Route path="/login" exact component={Login} />
-      <Route path="/order" exact component={OrderFormHook} />
-      <Route path="/view-orders" exact component={ViewOrdersHook} />
+      <Switch>
+        <Route path="/" exact component={Main} />
+
+        <ProtectedRoute
+          authType="normal"
+          path="/signup"
+          exact
+          component={Signup}
+        />
+
+        <ProtectedRoute
+          authType="normal"
+          path="/login"
+          exact
+          component={Login}
+        />
+
+        <ProtectedRoute
+          authType="private"
+          path="/order"
+          exact
+          component={OrderForm}
+        />
+
+        <ProtectedRoute
+          authType="private"
+          path="/view-orders"
+          exact
+          component={ViewOrders}
+        />
+      </Switch>
     </Router>
   );
-}
+};
 
 export default AppRouter;

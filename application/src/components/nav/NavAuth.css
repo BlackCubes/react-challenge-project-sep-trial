@@ -1,0 +1,21 @@
+.nav-auth {
+  background: #7a5114;
+}
+
+.nav-auth__container {
+  margin-right: 20%;
+  margin-left: 20%;
+  background: #eceaea;
+}
+
+.logo {
+  display: block;
+  font-family: "Optima";
+  font-size: 4em;
+  padding-left: 20%;
+  padding-right: 20%;
+  padding-top: 5%;
+  text-align: center;
+  text-decoration: underline;
+  text-decoration-color: #a43f3f;
+}
