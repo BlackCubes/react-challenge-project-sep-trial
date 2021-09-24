@@ -1,4 +1,5 @@
 import { finishAddOrder, finishDeleteOrder } from "../actions/orderActions";
+import { addSnackbar } from "./snackbarActions";
 import {
   CONNECT_WEBSOCKET,
   CONNECT_WEBSOCKET_ERROR,
@@ -22,11 +23,14 @@ export const websocketConnect = () => ({
 
 // WEBSOCKET MESSAGE
 export const websocketMessage = () => (dispatch) => {
-  const finishWebsocketMessage = (data) =>
+  const finishWebsocketMessage = (data) => {
     dispatch({
       type: MESSAGE_WEBSOCKET,
       result: { message: data.message },
     });
+
+    dispatch(addSnackbar(data.message, "green"));
+  };
 
   return dispatch({
     type: "socket",
