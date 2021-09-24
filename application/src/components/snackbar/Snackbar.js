@@ -18,18 +18,19 @@ const Snackbar = ({
   snackbarCount,
   snackbarMessages,
 }) => {
-  if (!snackbarMessages) return;
+  if (!snackbarMessages.length) return null;
 
   console.log("snackbarMessages: ", snackbarMessages);
   console.log("snackbarCount: ", snackbarCount);
 
   return ReactDOM.createPortal(
     <div
-      className={`snackbar${snackbarMessages[0].color} show`}
+      className={`snackbar ${snackbarMessages[0].color} show`}
       onClick={() => commenceDeleteSnackbar(snackbarMessages[0].id)}
     >
       {snackbarMessages[0].content}
-    </div>
+    </div>,
+    document.getElementById("snackbar")
   );
 };
 
