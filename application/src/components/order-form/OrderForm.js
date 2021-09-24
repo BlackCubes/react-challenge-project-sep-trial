@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Template } from "../../components";
 import { addOrder } from "../../redux/actions/orderActions";
-import "./orderForm.css";
+import "./OrderForm.css";
 
 const mapStateToProps = (state) => ({
   authEmail: state.auth.email,
