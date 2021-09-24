@@ -11,12 +11,13 @@
   visibility: hidden;
 }
 
-.snackbar p {
-  margin: 0;
-}
-
 .snackbar.show {
   visibility: visible;
+  animation: fadein 0.5s;
+}
+
+.snackbar p {
+  margin: 0;
 }
 
 .snackbar-button {
@@ -52,4 +53,16 @@
 
 .snackbar.red {
   background-color: #d32f2f;
+}
+
+/* ANIMATIONS */
+@keyframes fadein {
+  from {
+    bottom: 0;
+    opacity: 0;
+  }
+  to {
+    bottom: 48px;
+    opacity: 1;
+  }
 }
