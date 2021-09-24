@@ -2,7 +2,9 @@ import { ADD_SNACKBAR, DELETE_SNACKBAR } from "../constants/snackbarTypes";
 
 const INITIAL_STATE = {
   messages: [],
-  count: 0,
+  totalCount: 0,
+  // An initial of 1 due to when the message first appears.
+  messageReadCount: 1,
 };
 
 const snackbarReducer = (state = INITIAL_STATE, action) => {
@@ -20,19 +22,23 @@ const snackbarReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         messages: newMessages,
-        count: newCount,
+        totalCount: newCount,
       };
     case DELETE_SNACKBAR:
       const updatedMessages = state.messages.length
         ? state.messages.filter((message) => message.id !== action.payload.id)
         : state.messages;
 
-      const updatedCount = updatedMessages.length;
+      // The added 1 is the initial case when the message first appears and thus the
+      // user has "read" it.
+      const updateReadCount = updatedMessages.length
+        ? state.totalCount - updatedMessages.length + 1
+        : 1;
 
       return {
         ...state,
         messages: updatedMessages,
-        count: updatedCount,
+        messageReadCount: updateReadCount,
       };
     default:
       return { ...state };

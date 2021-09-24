@@ -5,8 +5,9 @@ import { deleteSnackbar } from "../../redux/actions/snackbarActions";
 import "./Snackbar.css";
 
 const mapStateToProps = (state) => ({
-  snackbarCount: state.snackbar.count,
-  snackbarMessages: state.snackbar.messages,
+  messages: state.snackbar.messages,
+  messageReadCount: state.snackbar.messageReadCount,
+  totalCount: state.snackbar.totalCount,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -15,25 +16,28 @@ const mapDispatchToProps = (dispatch) => ({
 
 const Snackbar = ({
   commenceDeleteSnackbar,
-  snackbarCount,
-  snackbarMessages,
+  messages,
+  messageReadCount,
+  totalCount,
 }) => {
-  if (!snackbarMessages.length) return null;
+  if (!messages.length) return null;
 
   return ReactDOM.createPortal(
-    <div className={`snackbar ${snackbarMessages[0].color} show`}>
+    <div className={`snackbar ${messages[0].color} show`}>
       <div className="snackbar-button">
-        <button onClick={() => commenceDeleteSnackbar(snackbarMessages[0].id)}>
+        <button onClick={() => commenceDeleteSnackbar(messages[0].id)}>
           &#10005;
         </button>
       </div>
 
       <div className="snackbar-content">
-        <p>{snackbarMessages[0].content}</p>
+        <p>{messages[0].content}</p>
       </div>
 
       <div className="snackbar-count">
-        <p>{snackbarCount}</p>
+        <p>
+          {messageReadCount}/{totalCount}
+        </p>
       </div>
     </div>,
     document.getElementById("snackbar")
