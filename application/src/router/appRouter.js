@@ -1,13 +1,7 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
-import {
-  Main,
-  Login,
-  OrderFormHook,
-  Signup,
-  ViewOrdersHook,
-} from "../components";
+import { Main, Login, OrderForm, Signup, ViewOrders } from "../components";
 
 const AppRouter = (props) => {
   return (
@@ -33,14 +27,14 @@ const AppRouter = (props) => {
           authType="private"
           path="/order"
           exact
-          component={OrderFormHook}
+          component={OrderForm}
         />
 
         <ProtectedRoute
           authType="private"
           path="/view-orders"
           exact
-          component={ViewOrdersHook}
+          component={ViewOrders}
         />
       </Switch>
     </Router>

@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { logoutUser } from "../../redux/actions/authActions";
+import { logoutUser } from "../../../redux/actions/authActions";
 import {
   websocketAddOrder,
   websocketConnect,
   websocketDeleteOrder,
   websocketMessage,
-} from "../../redux/actions/websocketActions";
-import "./nav.css";
+} from "../../../redux/actions/websocketActions";
+import "./NavAuthSub.css";
 
 const mapStateToProps = (state) => ({
   authEmail: state.auth.email,
@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch) => ({
   commenceWebsocketMessage: () => dispatch(websocketMessage()),
 });
 
-const Nav = ({
+const NavAuthSub = ({
   commenceLogoutUser,
   commenceWebsocketAddOrder,
   commenceWebsocketConnect,
@@ -78,4 +78,4 @@ const Nav = ({
     </div>
   );
 };
-export default connect(mapStateToProps, mapDispatchToProps)(Nav);
+export default connect(mapStateToProps, mapDispatchToProps)(NavAuthSub);
