@@ -1,0 +1,26 @@
+.snackbar {
+  position: fixed;
+  bottom: 48px;
+  left: 50%;
+  font-size: 25.6px;
+  font-weight: 400;
+  text-align: center;
+  color: white;
+  min-width: 400px;
+  padding: 25.6px;
+  border-radius: 3.2px;
+  transform: translateX(-50%);
+  visibility: hidden;
+}
+
+.snackbar.show {
+  visibility: visible;
+}
+
+.snackbar.green {
+  background-color: #43a047;
+}
+
+.snackbar.red {
+  background-color: #d32f2f;
+}
