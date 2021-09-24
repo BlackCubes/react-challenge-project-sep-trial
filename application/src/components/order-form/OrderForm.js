@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
+import NavAuth from "../nav";
 import { addOrder } from "../../redux/actions/orderActions";
 import "./OrderForm.css";
 
@@ -28,67 +29,71 @@ const OrderForm = ({ authEmail, commenceAddOrder, orderLoading }) => {
   };
 
   return (
-    <div className="bg-layer">
-      <div className="fg-layer">
-        <div className="form-wrapper">
-          <form>
-            <label className="form-label">I'd like to order...</label>
+    <>
+      <NavAuth />
 
-            <br />
+      <div className="bg-layer">
+        <div className="fg-layer">
+          <div className="form-wrapper">
+            <form>
+              <label className="form-label">I'd like to order...</label>
 
-            <select
-              value={orderItem}
-              onChange={menuItemChosen}
-              className="menu-select"
-            >
-              <option value="" defaultValue disabled hidden>
-                Lunch menu
-              </option>
+              <br />
 
-              <option value="Soup of the Day">Soup of the Day</option>
+              <select
+                value={orderItem}
+                onChange={menuItemChosen}
+                className="menu-select"
+              >
+                <option value="" defaultValue disabled hidden>
+                  Lunch menu
+                </option>
 
-              <option value="Linguini With White Wine Sauce">
-                Linguini With White Wine Sauce
-              </option>
+                <option value="Soup of the Day">Soup of the Day</option>
 
-              <option value="Eggplant and Mushroom Panini">
-                Eggplant and Mushroom Panini
-              </option>
+                <option value="Linguini With White Wine Sauce">
+                  Linguini With White Wine Sauce
+                </option>
 
-              <option value="Chili Con Carne">Chili Con Carne</option>
-            </select>
+                <option value="Eggplant and Mushroom Panini">
+                  Eggplant and Mushroom Panini
+                </option>
 
-            <br />
+                <option value="Chili Con Carne">Chili Con Carne</option>
+              </select>
 
-            <label className="qty-label">Qty:</label>
-            <select value={quantity} onChange={menuQuantityChosen}>
-              <option value="1">1</option>
+              <br />
 
-              <option value="2">2</option>
+              <label className="qty-label">Qty:</label>
+              <select value={quantity} onChange={menuQuantityChosen}>
+                <option value="1">1</option>
 
-              <option value="3">3</option>
+                <option value="2">2</option>
 
-              <option value="4">4</option>
+                <option value="3">3</option>
 
-              <option value="5">5</option>
+                <option value="4">4</option>
 
-              <option value="6">6</option>
-            </select>
+                <option value="5">5</option>
 
-            <button
-              type="button"
-              className="order-btn"
-              {...(!orderLoading && {
-                onClick: submitOrder,
-              })}
-              disabled={orderLoading}
-            >
-              {!orderLoading ? "Order It!" : "...."}
-            </button>
-          </form>
+                <option value="6">6</option>
+              </select>
+
+              <button
+                type="button"
+                className="order-btn"
+                {...(!orderLoading && {
+                  onClick: submitOrder,
+                })}
+                disabled={orderLoading}
+              >
+                {!orderLoading ? "Order It!" : "...."}
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
