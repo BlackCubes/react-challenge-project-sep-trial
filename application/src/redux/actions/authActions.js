@@ -7,6 +7,7 @@ import {
   SIGNUP_AUTH,
   SUCCESS_AUTH,
 } from "../constants/authTypes";
+import { addSnackbar } from "./snackbarActions";
 import { headers } from "../../utils";
 
 // AUTH LOADING
@@ -40,10 +41,12 @@ export const signupUser =
       .then((res) => {
         dispatch(finishSignup());
         dispatch(finishAuthSuccess(res.success));
+        dispatch(addSnackbar("Signup successful.", "green"));
       })
       .catch((err) => {
         dispatch(finishAuthError(err.error));
         dispatch(finishAuthSuccess(err.success));
+        dispatch(addSnackbar(err.error, "red"));
       })
       .finally(() => dispatch(finishAuthLoading(false)));
   };
@@ -66,16 +69,22 @@ export const loginUser = (email, password) => (dispatch) => {
     .then((res) => {
       dispatch(finishLogin(res.email, res.token));
       dispatch(finishAuthSuccess(res.success));
+      dispatch(addSnackbar("Login success.", "green"));
     })
     .catch((err) => {
       dispatch(finishAuthError(err.error));
       dispatch(finishAuthSuccess(err.success));
+      dispatch(addSnackbar(err.error, "red"));
     })
     .finally(() => dispatch(finishAuthLoading(false)));
 };
 
 // LOGOUT
-export const logoutUser = () => ({
-  type: LOGOUT_AUTH,
-  payload: null,
-});
+export const logoutUser = () => (dispatch) => {
+  dispatch({
+    type: LOGOUT_AUTH,
+    payload: null,
+  });
+
+  dispatch(addSnackbar("See you space cowboy...", "green"));
+};

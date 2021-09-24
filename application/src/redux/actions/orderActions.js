@@ -5,6 +5,7 @@ import {
   removeOrder,
   updateOrder,
 } from "../../api/orderAPI";
+import { addSnackbar } from "./snackbarActions";
 import {
   ADD_ORDER,
   DELETE_ORDER,
@@ -93,10 +94,12 @@ export const addOrder = (order_item, quantity, ordered_by) => (dispatch) => {
         )
       );
       dispatch(finishOrderSuccess(res.success));
+      dispatch(addSnackbar("Order added.", "green"));
     })
     .catch((err) => {
       dispatch(finishOrderError(err.error));
       dispatch(finishOrderSuccess(err.success));
+      dispatch(addSnackbar(err.error, "red"));
     })
     .finally(() => dispatch(finishOrderLoading(false)));
 };
@@ -124,10 +127,12 @@ export const editOrder =
           finishEditOrder(id, order_item, quantity, ordered_by, updatedAt)
         );
         dispatch(finishOrderSuccess(res.success));
+        dispatch(addSnackbar("Order changed.", "green"));
       })
       .catch((err) => {
         dispatch(finishOrderError(err.error));
         dispatch(finishOrderSuccess(err.success));
+        dispatch(addSnackbar(err.error, "red"));
       })
       .finally(() => dispatch(finishOrderLoading(false)));
   };
@@ -145,10 +150,12 @@ export const deleteOrder = (id) => (dispatch) => {
     .then((res) => {
       dispatch(finishDeleteOrder(id));
       dispatch(finishOrderSuccess(res.success));
+      dispatch(addSnackbar("Order removed.", "green"));
     })
     .catch((err) => {
       dispatch(finishOrderError(err.error));
       dispatch(finishOrderSuccess(err.success));
+      dispatch(addSnackbar(err.error, "red"));
     })
     .finally(() => dispatch(finishOrderLoading(false)));
 };
