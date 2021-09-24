@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
-import { logoutUser } from "../../redux/actions/authActions";
+import { logoutUser } from "../../../redux/actions/authActions";
 import {
   websocketAddOrder,
   websocketConnect,
   websocketDeleteOrder,
   websocketMessage,
-} from "../../redux/actions/websocketActions";
+} from "../../../redux/actions/websocketActions";
 import "./NavAuthSub.css";
 
 const mapStateToProps = (state) => ({

@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
-import { deleteOrder, editOrder } from "../../redux/actions/orderActions";
-import { localTimeStringMilitary } from "../../utils";
+import { deleteOrder, editOrder } from "../../../redux/actions/orderActions";
+import { localTimeStringMilitary } from "../../../utils";
 
 const mapStateToProps = (state) => ({
   orderLoading: state.order.loading,
